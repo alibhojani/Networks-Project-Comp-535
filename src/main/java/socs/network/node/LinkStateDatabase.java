@@ -33,8 +33,8 @@ public class LinkStateDatabase {
     lsa.lsaSeqNumber = Integer.MIN_VALUE;
     LinkDescription ld = new LinkDescription();
     ld.linkID = rd.simulatedIPAddress;
-    ld.portNum = -1;
-    ld.tosMetrics = 0;
+    ld.portNum = -1; //index in Link[] ports array
+    ld.tosMetrics = 0; //weight of all links
     lsa.links.add(ld);
     return lsa;
   }
