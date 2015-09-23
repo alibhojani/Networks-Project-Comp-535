@@ -4,7 +4,7 @@ import socs.network.node.Router;
 import socs.network.util.Configuration;
 
 public class Main {
-//github test
+// github test with stefan
   public static void main(String[] args) {
     if (args.length != 1) {
       System.out.println("usage: program conf_path");
