@@ -1,10 +1,10 @@
 package socs.network.node;
 
+import socs.network.message.SOSPFPacket;
 import socs.network.util.Configuration;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.net.SocketFactory;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,6 +20,7 @@ public class Router {
   protected LinkStateDatabase lsd;
   RouterDescription rd = new RouterDescription();
   Link[] ports = new Link[4]; //links (4 links)
+    ServerSocket listenSocket = null;
 
 
   public Router(Configuration config) {
@@ -35,16 +36,43 @@ public class Router {
     rd.simulatedIPAddress = config.getString("socs.network.router.ip");
     rd.processPortNumber = assignPort();
       System.out.println (ip+' '+rd.processPortNumber);
-
     lsd = new LinkStateDatabase(rd);
+       new Thread(new Runnable() {
+              public void run() {
+                  Socket clientSocket = null;
+                  while (clientSocket==null) {
+                      try {
+                          clientSocket = listenSocket.accept();
+                          ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+                          SOSPFPacket packet;
+                          try {
+                              while ((packet = (SOSPFPacket) ois.readObject()) != null) {
+                                  System.out.println(packet.toString());
+
+                              }
+                          } catch (ClassNotFoundException e) {
+                                  e.printStackTrace();
+                          } catch (EOFException eof) {
+                              // read last object
+                          } finally {
+                              ois.close();
+                              clientSocket.close();
+                          }
+                      } catch (IOException e) {
+                          e.printStackTrace();
+                      } finally {
+                          clientSocket = null;
+                      }
+                  }
+              }
+          }).start();
   }
 
   private int assignPort () {
       int port = INITIAL_PORT;
-      ServerSocket serverSocket = null;
-      while (serverSocket == null) {
+      while (listenSocket == null) {
           try {
-              serverSocket = new ServerSocket(port);
+              listenSocket = new ServerSocket(port);
           } catch (IOException e) {
               port++;
           }
@@ -80,7 +108,7 @@ public class Router {
    * <p/>
    * NOTE: this command should not trigger link database synchronization
    */
-  private void processAttach(String processIP, short processPort, String simulatedIP, short weight) {
+  private void processAttach(String processIP, int processPort, String simulatedIP, short weight) {
 
      RouterDescription rd2 = new RouterDescription();
      rd2.simulatedIPAddress = simulatedIP;
@@ -109,7 +137,27 @@ public class Router {
    * broadcast Hello to neighbors
    */
   private void processStart() {
-
+      for (Link l : ports) {
+          if (l == null) continue;
+          String remoteIP = l.router2.processIPAddress;
+          int remotePort = l.router2.processPortNumber;
+          try {
+              Socket connection = new Socket(remoteIP,remotePort);
+              ObjectOutputStream oos = new ObjectOutputStream(connection.getOutputStream());
+              SOSPFPacket helloMsg = new SOSPFPacket();
+              helloMsg.srcProcessIP = l.router1.processIPAddress;
+              helloMsg.srcProcessPort = l.router1.processPortNumber;
+              helloMsg.srcIP = l.router1.simulatedIPAddress;
+              helloMsg.dstIP = l.router2.simulatedIPAddress;
+              helloMsg.sospfType = 0;
+              helloMsg.neighborID = l.router1.simulatedIPAddress;
+              oos.writeObject(helloMsg);
+              oos.close();
+              connection.close();
+          } catch (IOException e) {
+              System.out.println ("Failed to connect to "+remoteIP+":"+remotePort);
+          }
+      }
   }
 
   /**
@@ -155,7 +203,7 @@ public class Router {
           processQuit();
         } else if (command.startsWith("attach ")) {
           String[] cmdLine = command.split(" ");
-          processAttach(cmdLine[1], Short.parseShort(cmdLine[2]),
+          processAttach(cmdLine[1], Integer.parseInt(cmdLine[2]),
                   cmdLine[3], Short.parseShort(cmdLine[4]));
         } else if (command.equals("start")) {
           processStart();
