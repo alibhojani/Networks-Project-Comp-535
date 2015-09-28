@@ -3,21 +3,45 @@ package socs.network.node;
 import socs.network.util.Configuration;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+//import java.net.SocketAddress;
+//import java.net.UnknownHostException;
+//import java.net.ServerSocket;
+
 
 
 public class Router {
 
   protected LinkStateDatabase lsd;
-
   RouterDescription rd = new RouterDescription();
+  Link[] ports = new Link[4]; //links (4 links)
 
-  //assuming that all routers are with 4 ports
-  Link[] ports = new Link[4];
 
   public Router(Configuration config) {
+    String ip;
+    try {
+      ip = InetAddress.getLocalHost().getHostAddress();
+      System.out.println (ip);
+    }
+    catch (UnknownHostException e) {
+      System.out.println ("IP address not assigned to Router due to the following error: " + e.toString());
+      ip = "";
+    }
+    rd.processIPAddress = ip;
     rd.simulatedIPAddress = config.getString("socs.network.router.ip");
+    rd.processPortNumber = assignPort();
+    //TODO: init router status?
+
     lsd = new LinkStateDatabase(rd);
+  }
+
+  private short assignPort () {
+    //TODO: initiate for loop and assign forloop
+    return 0;
   }
 
   /**
@@ -48,8 +72,28 @@ public class Router {
    * <p/>
    * NOTE: this command should not trigger link database synchronization
    */
-  private void processAttach(String processIP, short processPort,
-                             String simulatedIP, short weight) {
+  private void processAttach(String processIP, short processPort, String simulatedIP, short weight) {
+
+     RouterDescription rd2 = new RouterDescription();
+     rd2.simulatedIPAddress = simulatedIP;
+     rd2.processPortNumber = processPort;
+     rd2.processIPAddress = processIP;
+     //TODO: rd2 router status?
+
+     Link l = new Link(rd, rd2);
+
+     int portFound = -1;
+
+     for (int i = 0; i<4; i++) {
+        if (ports[i] == null) {
+            ports[i] = l;
+            portFound = i;
+            break;
+        }
+     }
+
+     if (portFound < 0) System.out.println ("All links occupied, routers not attached");
+     //else
 
   }
 
