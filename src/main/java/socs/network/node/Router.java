@@ -1,5 +1,7 @@
 package socs.network.node;
 
+import socs.network.message.LSA;
+import socs.network.message.LinkDescription;
 import socs.network.message.SOSPFPacket;
 import socs.network.util.Configuration;
 
@@ -9,6 +11,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.LinkedList;
 //import java.net.SocketAddress;
 //import java.net.UnknownHostException;
 //import java.net.ServerSocket;
@@ -108,7 +111,7 @@ public class Router {
    * <p/>
    * NOTE: this command should not trigger link database synchronization
    */
-   private void processAttach(String processIP, short processPort, String simulatedIP, short weight) {
+   private void processAttach(String processIP, int processPort, String simulatedIP, short weight) {
 
      RouterDescription rd2 = new RouterDescription();
      rd2.simulatedIPAddress = simulatedIP;
