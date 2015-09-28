@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 //import java.net.SocketAddress;
@@ -15,7 +16,7 @@ import java.net.UnknownHostException;
 
 
 public class Router {
-
+  public static final int INITIAL_PORT = 50000;
   protected LinkStateDatabase lsd;
   RouterDescription rd = new RouterDescription();
   Link[] ports = new Link[4]; //links (4 links)
@@ -25,7 +26,6 @@ public class Router {
     String ip;
     try {
       ip = InetAddress.getLocalHost().getHostAddress();
-      System.out.println (ip);
     }
     catch (UnknownHostException e) {
       System.out.println ("IP address not assigned to Router due to the following error: " + e.toString());
@@ -34,14 +34,22 @@ public class Router {
     rd.processIPAddress = ip;
     rd.simulatedIPAddress = config.getString("socs.network.router.ip");
     rd.processPortNumber = assignPort();
-    //TODO: init router status?
+      System.out.println (ip+' '+rd.processPortNumber);
 
     lsd = new LinkStateDatabase(rd);
   }
 
-  private short assignPort () {
-    //TODO: initiate for loop and assign forloop
-    return 0;
+  private int assignPort () {
+      int port = INITIAL_PORT;
+      ServerSocket serverSocket = null;
+      while (serverSocket == null) {
+          try {
+              serverSocket = new ServerSocket(port);
+          } catch (IOException e) {
+              port++;
+          }
+      }
+      return port;
   }
 
   /**
