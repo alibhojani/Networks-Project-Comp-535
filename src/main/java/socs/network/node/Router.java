@@ -108,7 +108,7 @@ public class Router {
    * <p/>
    * NOTE: this command should not trigger link database synchronization
    */
-  private void processAttach(String processIP, int processPort, String simulatedIP, short weight) {
+   private void processAttach(String processIP, short processPort, String simulatedIP, short weight) {
 
      RouterDescription rd2 = new RouterDescription();
      rd2.simulatedIPAddress = simulatedIP;
@@ -129,7 +129,24 @@ public class Router {
      }
 
      if (portFound < 0) System.out.println ("All links occupied, routers not attached");
-     //else
+
+     else { //search the lsd's hashmap for lsa with rd2's simIP.
+
+         LSA newLSA = new LSA();
+         newLSA.linkStateID = rd.simulatedIPAddress;
+         if (lsd._store.containsKey (rd.simulatedIPAddress)) {
+             newLSA.lsaSeqNumber = lsd._store.get(rd.simulatedIPAddress).lsaSeqNumber +1;
+             newLSA.links = (LinkedList<LinkDescription>) lsd._store.get(rd.simulatedIPAddress).links.clone();
+         }
+         //create new LinkDescription:
+         LinkDescription ld = new LinkDescription();
+         ld.tosMetrics = weight;
+         ld.portNum = portFound;
+         ld.linkID = rd2.simulatedIPAddress;
+         newLSA.links.add(ld);
+         lsd._store.put (rd.simulatedIPAddress, newLSA);
+
+     }
 
   }
 
