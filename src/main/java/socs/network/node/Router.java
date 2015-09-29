@@ -50,8 +50,7 @@ public class Router {
                           SOSPFPacket packet;
                           try {
                               while ((packet = (SOSPFPacket) ois.readObject()) != null) {
-                                  System.out.println(packet.toString());
-
+                                  processReceivedMessage(packet);
                               }
                           } catch (ClassNotFoundException e) {
                                   e.printStackTrace();
@@ -112,29 +111,8 @@ public class Router {
    * NOTE: this command should not trigger link database synchronization
    */
    private void processAttach(String processIP, int processPort, String simulatedIP, short weight) {
-
-     RouterDescription rd2 = new RouterDescription();
-     rd2.simulatedIPAddress = simulatedIP;
-     rd2.processPortNumber = processPort;
-     rd2.processIPAddress = processIP;
-     //TODO: rd2 router status?
-
-     Link l = new Link(rd, rd2);
-
-     int portFound = -1;
-
-     for (int i = 0; i<4; i++) {
-        if (ports[i] == null) {
-            ports[i] = l;
-            portFound = i;
-            break;
-        }
-     }
-
-     if (portFound < 0) System.out.println ("All links occupied, routers not attached");
-
-     else { //search the lsd's hashmap for lsa with rd2's simIP.
-
+    int portFound = addRouterToPorts(processIP,processPort,simulatedIP);
+     if (portFound!=-1) { //search the lsd's hashmap for lsa with rd2's simIP.
          LSA newLSA = new LSA();
          newLSA.linkStateID = rd.simulatedIPAddress;
          if (lsd._store.containsKey (rd.simulatedIPAddress)) {
@@ -145,7 +123,7 @@ public class Router {
          LinkDescription ld = new LinkDescription();
          ld.tosMetrics = weight;
          ld.portNum = portFound;
-         ld.linkID = rd2.simulatedIPAddress;
+         ld.linkID = simulatedIP;
          newLSA.links.add(ld);
          lsd._store.put (rd.simulatedIPAddress, newLSA);
 
@@ -161,24 +139,91 @@ public class Router {
           if (l == null) continue;
           String remoteIP = l.router2.processIPAddress;
           int remotePort = l.router2.processPortNumber;
-          try {
-              Socket connection = new Socket(remoteIP,remotePort);
-              ObjectOutputStream oos = new ObjectOutputStream(connection.getOutputStream());
-              SOSPFPacket helloMsg = new SOSPFPacket();
-              helloMsg.srcProcessIP = l.router1.processIPAddress;
-              helloMsg.srcProcessPort = l.router1.processPortNumber;
-              helloMsg.srcIP = l.router1.simulatedIPAddress;
-              helloMsg.dstIP = l.router2.simulatedIPAddress;
-              helloMsg.sospfType = 0;
-              helloMsg.neighborID = l.router1.simulatedIPAddress;
-              oos.writeObject(helloMsg);
-              oos.close();
-              connection.close();
-          } catch (IOException e) {
-              System.out.println ("Failed to connect to "+remoteIP+":"+remotePort);
-          }
+          SOSPFPacket helloMsg = new SOSPFPacket();
+          helloMsg.srcProcessIP = l.router1.processIPAddress;
+          helloMsg.srcProcessPort = l.router1.processPortNumber;
+          helloMsg.srcIP = l.router1.simulatedIPAddress;
+          helloMsg.dstIP = l.router2.simulatedIPAddress;
+          helloMsg.sospfType = 0;
+          helloMsg.neighborID = l.router1.simulatedIPAddress;
+          sendMessage(helloMsg, remoteIP, remotePort);
       }
   }
+
+    private int addRouterToPorts(String processIP, int processPort, String simulatedIP) {
+        RouterDescription rd2 = new RouterDescription();
+        rd2.simulatedIPAddress = simulatedIP;
+        rd2.processPortNumber = processPort;
+        rd2.processIPAddress = processIP;
+        rd2.status = RouterStatus.INIT;
+
+        Link l = new Link(rd, rd2);
+
+        int portFound = -1;
+
+        for (int i = 0; i<4; i++) {
+            if (ports[i] == null) {
+                ports[i] = l;
+                portFound = i;
+                break;
+            }
+        }
+
+        return portFound;
+    }
+
+    private boolean setRouterStatus(String simulatedIPAddress, RouterStatus newStatus) {
+        boolean found = false;
+        for (Link l : ports) {
+            if (l == null) continue;
+            if (l.router2.simulatedIPAddress.equals(simulatedIPAddress)) {
+                found = true;
+                l.router2.status = newStatus;
+            }
+        }
+        return found;
+    }
+
+    private void sendMessage(final Serializable message, final String remoteIP, final int remotePort) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Socket connection = new Socket(remoteIP, remotePort);
+                    ObjectOutputStream oos = new ObjectOutputStream(connection.getOutputStream());
+                    oos.writeObject(message);
+                    oos.close();
+                    connection.close();
+                } catch (IOException e) {
+                    System.out.println("Failed to connect to " + remoteIP + ":" + remotePort);
+                }
+            }
+        }).start();
+    }
+
+    private void processReceivedMessage(SOSPFPacket message) {
+        if (message.sospfType == 0) {
+            System.out.println("received HELLO from "+message.neighborID+";");
+            // HELLO message. Try setting status to TWO_WAY;
+            if (!setRouterStatus(message.neighborID, RouterStatus.TWO_WAY)) {
+                // router is not in ports, INIT then :)
+                int result = addRouterToPorts(message.neighborID, message.srcProcessPort, message.srcProcessIP);
+                if (result != -1) {
+                    System.out.println("set " + message.neighborID + " state to INIT;");
+                    // good. reply now.
+                    SOSPFPacket helloMsg = new SOSPFPacket();
+                    helloMsg.srcProcessIP = rd.processIPAddress;
+                    helloMsg.srcProcessPort = rd.processPortNumber;
+                    helloMsg.srcIP = rd.simulatedIPAddress;
+                    helloMsg.dstIP = message.neighborID;
+                    helloMsg.sospfType = 0;
+                    helloMsg.neighborID = rd.simulatedIPAddress;
+                    sendMessage(helloMsg, message.srcProcessIP, message.srcProcessPort);
+                }
+            } else {
+                System.out.println("set " + message.neighborID + " state to TWO_WAY;");
+            }
+        }
+    }
 
   /**
    * attach the link to the remote router, which is identified by the given simulated ip;
