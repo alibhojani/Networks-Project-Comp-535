@@ -236,10 +236,15 @@ public class Router {
                 }
                 System.out.println("set " + message.neighborID + " state to TWO_WAY;");
             }
+        } else if (message.sospfType == 1) {
+            for (LSA lsa: message.lsaArray) {
+                processLSA(lsa);
+            }
+            sendLSAUpdate(message.srcIP);
         }
     }
 
-    private void sendLSAUpdate (RouterDescription forwardedFrom) { //forwardedFrom is null if sent from start
+    private void sendLSAUpdate (String forwardedFrom) { //forwardedFrom is null if sent from start
 
         final SOSPFPacket p = new SOSPFPacket();
         p.srcIP = rd.simulatedIPAddress;
@@ -254,7 +259,7 @@ public class Router {
 
         for (final Link l : ports) {
             if (forwardedFrom != null) {
-                if (!forwardedFrom.equals(l.router2)) {
+                if (!forwardedFrom.equals(l.router2.simulatedIPAddress)) {
                     p.dstIP = l.router2.simulatedIPAddress;
                     //send p through socket to all neighbours but forwardedFrom
                     new Thread(new Runnable() {
