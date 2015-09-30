@@ -305,7 +305,9 @@ public class Router {
    * output the neighbors of the routers
    */
   private void processNeighbors() {
-
+        for (String s:lsd._store.keySet()) {
+            System.out.println(s);
+        }
   }
 
   /**
