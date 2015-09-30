@@ -146,6 +146,7 @@ public class Router {
           helloMsg.dstIP = l.router2.simulatedIPAddress;
           helloMsg.sospfType = 0;
           helloMsg.neighborID = l.router1.simulatedIPAddress;
+          helloMsg.routerID = l.router1.simulatedIPAddress;
           sendMessage(helloMsg, remoteIP, remotePort);
       }
   }
@@ -206,7 +207,7 @@ public class Router {
             // HELLO message. Try setting status to TWO_WAY;
             if (!setRouterStatus(message.neighborID, RouterStatus.TWO_WAY)) {
                 // router is not in ports, INIT then :)
-                int result = addRouterToPorts(message.neighborID, message.srcProcessPort, message.srcProcessIP);
+                int result = addRouterToPorts(message.srcProcessIP,message.srcProcessPort, message.neighborID);
                 if (result != -1) {
                     System.out.println("set " + message.neighborID + " state to INIT;");
                     // good. reply now.
@@ -217,9 +218,22 @@ public class Router {
                     helloMsg.dstIP = message.neighborID;
                     helloMsg.sospfType = 0;
                     helloMsg.neighborID = rd.simulatedIPAddress;
+                    helloMsg.routerID = message.routerID;
                     sendMessage(helloMsg, message.srcProcessIP, message.srcProcessPort);
                 }
             } else {
+                if (message.routerID.equals(rd.simulatedIPAddress)) {
+                    // good. reply now.
+                    SOSPFPacket helloMsg = new SOSPFPacket();
+                    helloMsg.srcProcessIP = rd.processIPAddress;
+                    helloMsg.srcProcessPort = rd.processPortNumber;
+                    helloMsg.srcIP = rd.simulatedIPAddress;
+                    helloMsg.dstIP = message.neighborID;
+                    helloMsg.sospfType = 0;
+                    helloMsg.neighborID = rd.simulatedIPAddress;
+                    helloMsg.routerID = message.routerID;
+                    sendMessage(helloMsg, message.srcProcessIP, message.srcProcessPort);
+                }
                 System.out.println("set " + message.neighborID + " state to TWO_WAY;");
             }
         }
