@@ -149,6 +149,7 @@ public class Router {
           helloMsg.routerID = l.router1.simulatedIPAddress;
           sendMessage(helloMsg, remoteIP, remotePort);
       }
+      sendLSAUpdate(null);
   }
 
     private int addRouterToPorts(String processIP, int processPort, String simulatedIP) {
@@ -262,37 +263,13 @@ public class Router {
                 if (!forwardedFrom.equals(l.router2.simulatedIPAddress)) {
                     p.dstIP = l.router2.simulatedIPAddress;
                     //send p through socket to all neighbours but forwardedFrom
-                    new Thread(new Runnable() {
-                        public void run() {
-                            try {
-                                Socket connection = new Socket(l.router2.processIPAddress, l.router2.processPortNumber);
-                                ObjectOutputStream oos = new ObjectOutputStream(connection.getOutputStream());
-                                oos.writeObject(p);
-                                oos.close();
-                                connection.close();
-                            } catch (IOException e) {
-                                System.out.println("Failed to connect to " + l.router2.processIPAddress + ":" + l.router2.processPortNumber);
-                            }
-                        }
-                    }).start();
+                    sendMessage(p,l.router2.processIPAddress, l.router2.processPortNumber);
                 }
             }
             else {
                p.dstIP = l.router2.simulatedIPAddress;
                //send p through socket to all
-                new Thread(new Runnable() {
-                    public void run() {
-                        try {
-                            Socket connection = new Socket(l.router2.processIPAddress, l.router2.processPortNumber);
-                            ObjectOutputStream oos = new ObjectOutputStream(connection.getOutputStream());
-                            oos.writeObject(p);
-                            oos.close();
-                            connection.close();
-                        } catch (IOException e) {
-                            System.out.println("Failed to connect to " + l.router2.processIPAddress + ":" + l.router2.processPortNumber);
-                        }
-                    }
-                }).start();
+                sendMessage(p,l.router2.processIPAddress, l.router2.processPortNumber);
             }
         }
 
