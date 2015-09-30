@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
+import java.util.Vector;
 //import java.net.SocketAddress;
 //import java.net.UnknownHostException;
 //import java.net.ServerSocket;
@@ -253,23 +254,25 @@ public class Router {
         p.srcProcessPort = rd.processPortNumber;
         p.sospfType = 1;
         p.neighborID = rd.simulatedIPAddress;
+        p.lsaArray = new Vector<LSA>();
         //p.lsaArray.add (lsd._store.get (rd.simulatedIPAddress));
         for (LSA lsa : lsd._store.values()) {
-            p.lsaArray.add(lsa);
+            if (lsa != null) p.lsaArray.add(lsa);
         }
 
         for (final Link l : ports) {
-            if (forwardedFrom != null) {
-                if (!forwardedFrom.equals(l.router2.simulatedIPAddress)) {
+            if (l != null) {
+                if (forwardedFrom != null) {
+                    if (!forwardedFrom.equals(l.router2.simulatedIPAddress)) {
+                        p.dstIP = l.router2.simulatedIPAddress;
+                        //send p through socket to all neighbours but forwardedFrom
+                        sendMessage(p, l.router2.processIPAddress, l.router2.processPortNumber);
+                    }
+                } else {
                     p.dstIP = l.router2.simulatedIPAddress;
-                    //send p through socket to all neighbours but forwardedFrom
-                    sendMessage(p,l.router2.processIPAddress, l.router2.processPortNumber);
+                    //send p through socket to all
+                    sendMessage(p, l.router2.processIPAddress, l.router2.processPortNumber);
                 }
-            }
-            else {
-               p.dstIP = l.router2.simulatedIPAddress;
-               //send p through socket to all
-                sendMessage(p,l.router2.processIPAddress, l.router2.processPortNumber);
             }
         }
 
@@ -277,11 +280,14 @@ public class Router {
     }
 
     private void processLSA (LSA lsa) {
+
+        if (lsa.linkStateID.equals(rd.simulatedIPAddress)) lsa.lsaSeqNumber += 1;
+
         if (lsd._store.get(lsa.linkStateID) == null) {
             lsd._store.put (lsa.linkStateID, lsa); //add new
         }
         else {
-            if (lsa.lsaSeqNumber > lsd._store.get(lsa.linkStateID).lsaSeqNumber) {
+            if (lsd._store.get(lsa.linkStateID).lsaSeqNumber < lsa.lsaSeqNumber) {
                 lsd._store.remove (lsa.linkStateID); //remove just to be safe
                 lsd._store.put (lsa.linkStateID, lsa); //update
             }
@@ -305,8 +311,8 @@ public class Router {
    * output the neighbors of the routers
    */
   private void processNeighbors() {
-        for (String s:lsd._store.keySet()) {
-            System.out.println(s);
+        for (LSA lsa :lsd._store.values()) {
+            System.out.println(lsa.linkStateID);
         }
   }
 
