@@ -202,7 +202,7 @@ public class Router {
 
     private void processReceivedMessage(SOSPFPacket message) {
         if (message.sospfType == 0) {
-            System.out.println("received HELLO from "+message.neighborID+";");
+            System.out.println("received HELLO from "+message.neighborID+";"); //TODO: message.srcIP?
             // HELLO message. Try setting status to TWO_WAY;
             if (!setRouterStatus(message.neighborID, RouterStatus.TWO_WAY)) {
                 // router is not in ports, INIT then :)
@@ -223,6 +223,50 @@ public class Router {
                 System.out.println("set " + message.neighborID + " state to TWO_WAY;");
             }
         }
+    }
+
+    private void sendLSAUpdate (RouterDescription forwardedFrom) { //forwardedFrom is null if sent from start
+
+        SOSPFPacket p = new SOSPFPacket();
+        p.srcIP = rd.simulatedIPAddress;
+        p.srcProcessIP = rd.processIPAddress;
+        p.srcProcessPort = rd.processPortNumber;
+        p.sospfType = 1;
+        p.neighborID = rd.simulatedIPAddress;
+        //p.lsaArray.add (lsd._store.get (rd.simulatedIPAddress));
+        for (LSA lsa : lsd._store.values()) {
+            p.lsaArray.add(lsa);
+        }
+
+        for (Link l : ports) {
+            if (forwardedFrom != null) {
+                if (!forwardedFrom.equals(l.router2)) {
+                    p.dstIP = l.router2.simulatedIPAddress;
+                    //send p through socket to all neighbours but forwardedFrom
+                    //TODO: start socket and send p
+                }
+            }
+            else {
+               p.dstIP = l.router2.simulatedIPAddress;
+               //send p through socket to all
+               // TODO: start socket and send p
+            }
+        }
+
+
+    }
+
+    private void processLSA (LSA lsa) {
+        if (lsd._store.get(lsa.linkStateID) == null) {
+            lsd._store.put (lsa.linkStateID, lsa); //add new
+        }
+        else {
+            if (lsa.lsaSeqNumber > lsd._store.get(lsa.linkStateID).lsaSeqNumber) {
+                lsd._store.remove (lsa.linkStateID); //remove just to be safe
+                lsd._store.put (lsa.linkStateID, lsa); //update
+            }
+        }
+
     }
 
   /**
