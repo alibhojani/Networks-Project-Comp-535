@@ -227,7 +227,7 @@ public class Router {
 
     private void sendLSAUpdate (RouterDescription forwardedFrom) { //forwardedFrom is null if sent from start
 
-        SOSPFPacket p = new SOSPFPacket();
+        final SOSPFPacket p = new SOSPFPacket();
         p.srcIP = rd.simulatedIPAddress;
         p.srcProcessIP = rd.processIPAddress;
         p.srcProcessPort = rd.processPortNumber;
@@ -238,18 +238,42 @@ public class Router {
             p.lsaArray.add(lsa);
         }
 
-        for (Link l : ports) {
+        for (final Link l : ports) {
             if (forwardedFrom != null) {
                 if (!forwardedFrom.equals(l.router2)) {
                     p.dstIP = l.router2.simulatedIPAddress;
                     //send p through socket to all neighbours but forwardedFrom
-                    //TODO: start socket and send p
+                    new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                Socket connection = new Socket(l.router2.processIPAddress, l.router2.processPortNumber);
+                                ObjectOutputStream oos = new ObjectOutputStream(connection.getOutputStream());
+                                oos.writeObject(p);
+                                oos.close();
+                                connection.close();
+                            } catch (IOException e) {
+                                System.out.println("Failed to connect to " + l.router2.processIPAddress + ":" + l.router2.processPortNumber);
+                            }
+                        }
+                    }).start();
                 }
             }
             else {
                p.dstIP = l.router2.simulatedIPAddress;
                //send p through socket to all
-               // TODO: start socket and send p
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            Socket connection = new Socket(l.router2.processIPAddress, l.router2.processPortNumber);
+                            ObjectOutputStream oos = new ObjectOutputStream(connection.getOutputStream());
+                            oos.writeObject(p);
+                            oos.close();
+                            connection.close();
+                        } catch (IOException e) {
+                            System.out.println("Failed to connect to " + l.router2.processIPAddress + ":" + l.router2.processPortNumber);
+                        }
+                    }
+                }).start();
             }
         }
 
