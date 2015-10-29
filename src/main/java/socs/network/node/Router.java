@@ -313,9 +313,13 @@ public class Router {
    * output the neighbors of the routers
    */
   private void processNeighbors() {
+      synchronized(lsd._store) {
         for (LSA lsa :lsd._store.values()) {
-            System.out.println(lsa.linkStateID);
+            if (!lsa.linkStateID.equals(rd.simulatedIPAddress)) {
+                System.out.println(lsa.linkStateID);
+            }
         }
+      }
   }
 
   /**

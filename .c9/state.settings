@@ -147,6 +147,7 @@
     "search-history": {
         "search": {
             "json()": [
+                "lsa.linkStateID",
                 "sendLSAUpdate",
                 "Thread"
             ]
