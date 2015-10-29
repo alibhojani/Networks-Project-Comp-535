@@ -1,0 +1,10 @@
+/usr/src/mymaven/src/main/java/socs/network/message/LinkDescription.java
+/usr/src/mymaven/src/main/java/socs/network/node/RouterDescription.java
+/usr/src/mymaven/src/main/java/socs/network/util/Configuration.java
+/usr/src/mymaven/src/main/java/socs/network/node/Link.java
+/usr/src/mymaven/src/main/java/socs/network/node/RouterStatus.java
+/usr/src/mymaven/src/main/java/socs/network/message/LSA.java
+/usr/src/mymaven/src/main/java/socs/network/message/SOSPFPacket.java
+/usr/src/mymaven/src/main/java/socs/network/node/Router.java
+/usr/src/mymaven/src/main/java/socs/network/node/LinkStateDatabase.java
+/usr/src/mymaven/src/main/java/socs/network/Main.java

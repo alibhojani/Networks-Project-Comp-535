@@ -13,9 +13,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.Vector;
-//import java.net.SocketAddress;
-//import java.net.UnknownHostException;
-//import java.net.ServerSocket;
 
 
 
@@ -251,7 +248,6 @@ public class Router {
     }
 
     private void sendLSAUpdate (String forwardedFrom) { //forwardedFrom is null if sent from start
-
         final SOSPFPacket p = new SOSPFPacket();
         p.srcIP = rd.simulatedIPAddress;
         p.srcProcessIP = rd.processIPAddress;
@@ -260,8 +256,10 @@ public class Router {
         p.neighborID = rd.simulatedIPAddress;
         p.lsaArray = new Vector<LSA>();
         //p.lsaArray.add (lsd._store.get (rd.simulatedIPAddress));
-        for (LSA lsa : lsd._store.values()) {
-            if (lsa != null) p.lsaArray.add(lsa);
+        synchronized(lsd._store) {
+            for (LSA lsa : lsd._store.values()) {
+                if (lsa != null) p.lsaArray.add(lsa);
+            }
         }
 
         for (final Link l : ports) {
@@ -286,17 +284,17 @@ public class Router {
     private void processLSA (LSA lsa) {
 
         if (lsa.linkStateID.equals(rd.simulatedIPAddress)) lsa.lsaSeqNumber += 1;
-
-        if (lsd._store.get(lsa.linkStateID) == null) {
-            lsd._store.put (lsa.linkStateID, lsa); //add new
-        }
-        else {
-            if (lsd._store.get(lsa.linkStateID).lsaSeqNumber < lsa.lsaSeqNumber) {
-                lsd._store.remove (lsa.linkStateID); //remove just to be safe
-                lsd._store.put (lsa.linkStateID, lsa); //update
+        synchronized(lsd._store) {
+            if (lsd._store.get(lsa.linkStateID) == null) {
+                lsd._store.put (lsa.linkStateID, lsa); //add new
+            }
+            else {
+                if (lsd._store.get(lsa.linkStateID).lsaSeqNumber < lsa.lsaSeqNumber) {
+                    lsd._store.remove (lsa.linkStateID); //remove just to be safe
+                    lsd._store.put (lsa.linkStateID, lsa); //update
+                }
             }
         }
-
     }
 
   /**

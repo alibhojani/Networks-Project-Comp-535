@@ -1,0 +1,197 @@
+{
+    "ace": {
+        "search": {
+            "@backwards": "false",
+            "@highlightmatches": "true",
+            "@matchcase": "false",
+            "@preservecase": "false",
+            "@regex": "false",
+            "@wholeword": "false",
+            "@wraparound": "true"
+        }
+    },
+    "console": {
+        "@expanded": false,
+        "@height": "153",
+        "@maximized": "false",
+        "json()": {
+            "meta": {
+                "accessList": [
+                    "tab1",
+                    "tab2"
+                ]
+            },
+            "name": "pane1",
+            "nodes": [
+                {
+                    "type": "tab",
+                    "name": "tab1",
+                    "path": "",
+                    "className": [
+                        "tab1"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1446150046715
+                        },
+                        "filter": true,
+                        "title": "bash - \"3dbceab295b6\"",
+                        "tooltip": "bash - \"3dbceab295b6\"",
+                        "terminal": {
+                            "id": "devel_54",
+                            "cwd": "",
+                            "width": 0,
+                            "height": 0
+                        }
+                    },
+                    "editorType": "terminal",
+                    "active": true
+                },
+                {
+                    "type": "tab",
+                    "name": "tab2",
+                    "path": "",
+                    "className": [],
+                    "document": {
+                        "title": "Immediate",
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1446150046717
+                        },
+                        "filter": true
+                    },
+                    "editorType": "immediate",
+                    "active": false
+                }
+            ],
+            "skin": "editor_tab",
+            "skinset": "default",
+            "type": "pane"
+        }
+    },
+    "ext": {
+        "counters": {
+            "@ace": 1,
+            "@acestatus": 1,
+            "@divider": 4,
+            "@document": 4,
+            "@form": 5,
+            "@menu": 5,
+            "@menuitem": 13,
+            "@pane": 2,
+            "@session": 3,
+            "@tab": 4,
+            "@undoManager": 4,
+            "@welcome": 1
+        }
+    },
+    "findinfiles": {
+        "@console": "true",
+        "@matchcase": "false",
+        "@regex": "false",
+        "@wholeword": "false"
+    },
+    "menus": {
+        "@minimized": "false"
+    },
+    "nak": {
+        "@installed": true
+    },
+    "panecycle": {
+        "json()": [
+            "tab3",
+            "tab1"
+        ]
+    },
+    "panels": {
+        "@active-left": "none",
+        "@width-left": 294,
+        "commands.panel": {
+            "@enabled": "true",
+            "@name": "commands.panel"
+        },
+        "debugger": {
+            "@enabled": "true",
+            "@name": "debugger"
+        },
+        "navigate": {
+            "@enabled": "true",
+            "@name": "navigate"
+        },
+        "outline": {
+            "@enabled": "true",
+            "@name": "outline"
+        },
+        "tree": {
+            "@enabled": "true",
+            "@name": "tree"
+        }
+    },
+    "projecttree": {
+        "@showfs": true,
+        "expanded": {
+            "json()": [
+                "/",
+                "/src",
+                "/conf",
+                "/src/main",
+                "/src/main/java",
+                "/src/main/java/socs",
+                "/src/main/java/socs/network",
+                "/src/main/java/socs/network/util",
+                "/src/main/java/socs/network/node"
+            ]
+        }
+    },
+    "search-history": {
+        "search": {
+            "json()": [
+                "sendLSAUpdate",
+                "Thread"
+            ]
+        }
+    },
+    "tabs": {
+        "json()": {
+            "focus": "/src/main/java/socs/network/node/Router.java",
+            "meta": {
+                "accessList": [
+                    "tab3"
+                ]
+            },
+            "name": "pane0",
+            "nodes": [
+                {
+                    "type": "tab",
+                    "name": "tab3",
+                    "path": "/src/main/java/socs/network/node/Router.java",
+                    "className": [
+                        "tab3",
+                        "focus"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1446149924979
+                        },
+                        "filter": true,
+                        "title": "Router.java",
+                        "tooltip": "/src/main/java/socs/network/node/Router.java",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": true
+                }
+            ],
+            "skin": "editor_tab",
+            "skinset": "default",
+            "type": "pane"
+        }
+    },
+    "tree_selection": {
+        "json()": [
+            "/src/main/java/socs/network/node/Router.java"
+        ]
+    }
+}
