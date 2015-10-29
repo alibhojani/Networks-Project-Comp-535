@@ -203,7 +203,9 @@ public class Router {
         }).start();
     }
 
-    private void processReceivedMessage(SOSPFPacket message) {
+    private void processReceivedMessage(final SOSPFPacket message) {
+        new Thread(new Runnable() {
+            public void run() {
         if (message.sospfType == 0) {
             System.out.println("received HELLO from "+message.neighborID+";"); //TODO: message.srcIP?
             // HELLO message. Try setting status to TWO_WAY;
@@ -244,6 +246,8 @@ public class Router {
             }
             sendLSAUpdate(message.srcIP);
         }
+            }
+        }).start();
     }
 
     private void sendLSAUpdate (String forwardedFrom) { //forwardedFrom is null if sent from start
