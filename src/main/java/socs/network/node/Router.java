@@ -11,9 +11,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.LinkedList;
-import java.util.Vector;
-
+import java.util.*;
 
 
 public class Router {
@@ -88,6 +86,68 @@ public class Router {
    * @param destinationIP the ip adderss of the destination simulated router
    */
   private void processDetect(String destinationIP) {
+
+      ArrayList<String> q = new ArrayList<String>();
+      HashMap<String, Integer> dist = new HashMap<String, Integer>();
+      HashMap<String, String> prev = new HashMap <String, String>();
+
+        //init
+      for (String v : lsd._store.keySet()) {
+          dist.put(v, Integer.MAX_VALUE);
+          prev.put(v, null);
+          q.add(v);
+      }
+
+      dist.put(rd.simulatedIPAddress, 0);
+
+
+      while (!q.isEmpty()) {
+          //get node u with min dist to source
+          Integer currentMin = Integer.MAX_VALUE;
+          String u = null;
+          for (int i = 0; i < q.size(); i++) {
+            if (dist.get(q.get(i)) < currentMin) {
+                u = q.get(i);
+                currentMin = dist.get(u);
+            }
+          }
+
+          if (u.equals(destinationIP)) {
+              String p = destinationIP;
+              LinkedList <String> toPrint = new LinkedList<String>();
+              while (p != rd.simulatedIPAddress) { //TODO: add arrows etc
+                  toPrint.addFirst(p);
+                  p = prev.get(p);
+              }
+              toPrint.addFirst(p);
+
+              System.out.println (toPrint.toString());
+              break;
+              //System.out.println ("Sort of worked");
+          }
+          q.remove(u);
+
+          //unpack u, get neighbors
+          LSA uLSA = lsd._store.get(u);
+           if (uLSA != null) {
+               for (int i = 0; i < uLSA.links.size(); i++) {
+
+                   int alt = dist.get(u) + uLSA.links.get(i).tosMetrics;
+                   if (alt < dist.get(uLSA.links.get(i).linkID)) {
+                       //dist.remove(uLSA.links.get(i).linkID);
+                       dist.put(uLSA.links.get(i).linkID, alt);
+                       //prev.remove(uLSA.links.get(i).linkID);
+                       prev.put(uLSA.links.get(i).linkID, u);
+                   }
+
+               }
+           }
+      }
+
+
+
+
+
 
   }
 
@@ -290,7 +350,7 @@ public class Router {
             }
             else {
                 if (lsd._store.get(lsa.linkStateID).lsaSeqNumber < lsa.lsaSeqNumber) {
-                    lsd._store.remove (lsa.linkStateID); //remove just to be safe
+                    //lsd._store.remove (lsa.linkStateID);
                     lsd._store.put (lsa.linkStateID, lsa); //update
                 }
             }
