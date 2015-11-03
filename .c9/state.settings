@@ -100,7 +100,7 @@
     },
     "panecycle": {
         "json()": [
-            "tab2"
+            "tab3"
         ]
     },
     "panels": {
@@ -155,13 +155,13 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/test_intput.txt",
+            "focus": "/src/main/java/socs/network/node/Router.java",
             "meta": {
                 "accessList": [
+                    "tab3",
                     "tab2",
                     "tab4",
                     "tab1",
-                    "tab3",
                     "tab0"
                 ]
             },
@@ -172,12 +172,15 @@
                     "name": "tab3",
                     "path": "/src/main/java/socs/network/node/Router.java",
                     "className": [
-                        "tab3"
+                        "tab3",
+                        "changed",
+                        "conflict",
+                        "focus"
                     ],
                     "document": {
-                        "changed": false,
+                        "changed": true,
                         "meta": {
-                            "timestamp": 1446589171532
+                            "timestamp": 1446589322329
                         },
                         "filter": true,
                         "title": "Router.java",
@@ -185,7 +188,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
@@ -232,14 +235,12 @@
                     "name": "tab2",
                     "path": "/test_intput.txt",
                     "className": [
-                        "tab2",
-                        "changed",
-                        "focus"
+                        "tab2"
                     ],
                     "document": {
-                        "changed": true,
+                        "changed": false,
                         "meta": {
-                            "timestamp": 1446588965280
+                            "timestamp": 1446589261209
                         },
                         "filter": true,
                         "title": "test_intput.txt",
@@ -247,7 +248,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",

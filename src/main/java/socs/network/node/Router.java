@@ -11,8 +11,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.*;
-
+import java.util.LinkedList;
+import java.util.Vector;
 
 public class Router {
   public static final int INITIAL_PORT = 50000;
@@ -87,6 +87,7 @@ public class Router {
    */
   private void processDetect(String destinationIP) {
 
+
       ArrayList<String> q = new ArrayList<String>();
       HashMap<String, Integer> dist = new HashMap<String, Integer>();
       HashMap<String, String> prev = new HashMap <String, String>();
@@ -143,11 +144,6 @@ public class Router {
                }
            }
       }
-
-
-
-
-
 
   }
 
