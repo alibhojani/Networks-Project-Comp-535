@@ -11,8 +11,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.LinkedList;
-import java.util.Vector;
+import java.util.*;
 
 public class Router {
   public static final int INITIAL_PORT = 50000;
