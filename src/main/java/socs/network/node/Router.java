@@ -194,6 +194,7 @@ public class Router {
                     oos.close();
                     connection.close();
                 } catch (IOException e) {
+                    e.printStackTrace();
                     System.out.println("Failed to connect to " + remoteIP + ":" + remotePort);
                 }
             }
@@ -328,15 +329,9 @@ public class Router {
   private void processQuit() {
 
   }
-
-  public void terminal() {
-    try {
-      InputStreamReader isReader = new InputStreamReader(System.in);
-      BufferedReader br = new BufferedReader(isReader);
-      System.out.print(">> ");
-      String command = br.readLine();
-      while (true) {
-        if (command.startsWith("detect ")) {
+  
+  public boolean handleCommand(String command) {
+      if (command.startsWith("detect ")) {
           String[] cmdLine = command.split(" ");
           processDetect(cmdLine[1]);
         } else if (command.startsWith("disconnect ")) {
@@ -359,16 +354,41 @@ public class Router {
           processNeighbors();
         } else {
           //invalid command
-          break;
+          System.out.println("Invalid command.");
+          return false;
         }
+        return true;
+  }
+
+  public void terminal() {
+    try {
+      InputStreamReader isReader = new InputStreamReader(System.in);
+      BufferedReader br = new BufferedReader(isReader);
+      System.out.print(">> ");
+      String command = br.readLine();
+      while (handleCommand(command)) {
         System.out.print(">> ");
         command = br.readLine();
       }
       isReader.close();
       br.close();
+      System.exit(0);
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+  
+  public void processInputFile(String inputFile) {
+      try {
+          BufferedReader br = new BufferedReader(new FileReader(inputFile));
+          String line;
+          while ((line = br.readLine()) != null) {
+              handleCommand(line.trim());
+          }
+          br.close();
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
   }
 
 }
