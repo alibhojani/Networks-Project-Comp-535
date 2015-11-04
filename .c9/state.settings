@@ -75,14 +75,14 @@
             "@ace": 1,
             "@acestatus": 1,
             "@divider": 4,
-            "@document": 4,
-            "@form": 5,
+            "@document": 5,
+            "@form": 4,
             "@menu": 5,
             "@menuitem": 13,
             "@pane": 2,
-            "@session": 3,
-            "@tab": 4,
-            "@undoManager": 4,
+            "@session": 5,
+            "@tab": 5,
+            "@undoManager": 5,
             "@welcome": 1
         }
     },
@@ -100,13 +100,12 @@
     },
     "panecycle": {
         "json()": [
-            "tab3",
-            "tab1"
+            "tab3"
         ]
     },
     "panels": {
-        "@active-left": "none",
-        "@width-left": 294,
+        "@active-left": "tree",
+        "@width-left": 265,
         "commands.panel": {
             "@enabled": "true",
             "@name": "commands.panel"
@@ -147,6 +146,7 @@
     "search-history": {
         "search": {
             "json()": [
+                "terminal",
                 "lsa.linkStateID",
                 "sendLSAUpdate",
                 "Thread"
@@ -158,7 +158,11 @@
             "focus": "/src/main/java/socs/network/node/Router.java",
             "meta": {
                 "accessList": [
-                    "tab3"
+                    "tab3",
+                    "tab2",
+                    "tab4",
+                    "tab1",
+                    "tab0"
                 ]
             },
             "name": "pane0",
@@ -169,12 +173,14 @@
                     "path": "/src/main/java/socs/network/node/Router.java",
                     "className": [
                         "tab3",
+                        "changed",
+                        "conflict",
                         "focus"
                     ],
                     "document": {
-                        "changed": false,
+                        "changed": true,
                         "meta": {
-                            "timestamp": 1446149924979
+                            "timestamp": 1446589322329
                         },
                         "filter": true,
                         "title": "Router.java",
@@ -183,6 +189,86 @@
                     },
                     "editorType": "ace",
                     "active": true
+                },
+                {
+                    "type": "tab",
+                    "name": "tab0",
+                    "path": "/src/main/java/socs/network/Main.java",
+                    "className": [
+                        "tab0"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1446587166862
+                        },
+                        "filter": true,
+                        "title": "Main.java",
+                        "tooltip": "/src/main/java/socs/network/Main.java",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab1",
+                    "path": "/conf/router1.conf",
+                    "className": [
+                        "tab1"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1446149924979
+                        },
+                        "filter": true,
+                        "title": "router1.conf",
+                        "tooltip": "/conf/router1.conf",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab2",
+                    "path": "/test_intput.txt",
+                    "className": [
+                        "tab2"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1446589261209
+                        },
+                        "filter": true,
+                        "title": "test_intput.txt",
+                        "tooltip": "/test_intput.txt",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab4",
+                    "path": "/conf/router2.conf",
+                    "className": [
+                        "tab4"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1446149924979
+                        },
+                        "filter": true,
+                        "title": "router2.conf",
+                        "tooltip": "/conf/router2.conf",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": false
                 }
             ],
             "skin": "editor_tab",
@@ -192,7 +278,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/src/main/java/socs/network/node/Router.java"
+            "/conf/router2.conf"
         ]
     }
 }
