@@ -10,6 +10,9 @@
             "@wraparound": "true"
         }
     },
+    "breakpoints": {
+        "json()": []
+    },
     "console": {
         "@expanded": false,
         "@height": "153",
@@ -75,14 +78,14 @@
             "@ace": 1,
             "@acestatus": 1,
             "@divider": 4,
-            "@document": 5,
+            "@document": 27,
             "@form": 4,
             "@menu": 5,
             "@menuitem": 13,
             "@pane": 2,
-            "@session": 5,
-            "@tab": 5,
-            "@undoManager": 5,
+            "@session": 27,
+            "@tab": 27,
+            "@undoManager": 27,
             "@welcome": 1
         }
     },
@@ -100,12 +103,12 @@
     },
     "panecycle": {
         "json()": [
-            "tab3"
+            "tab16"
         ]
     },
     "panels": {
         "@active-left": "tree",
-        "@width-left": 265,
+        "@width-left": 224,
         "commands.panel": {
             "@enabled": "true",
             "@name": "commands.panel"
@@ -128,6 +131,7 @@
         }
     },
     "projecttree": {
+        "@scrollpos": 14,
         "@showfs": true,
         "expanded": {
             "json()": [
@@ -143,6 +147,9 @@
             ]
         }
     },
+    "recentfiles": {
+        "json()": []
+    },
     "search-history": {
         "search": {
             "json()": [
@@ -155,36 +162,36 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/src/main/java/socs/network/node/Router.java",
+            "focus": "/router1.txt",
             "meta": {
                 "accessList": [
-                    "tab3",
-                    "tab2",
-                    "tab4",
-                    "tab1",
-                    "tab0"
+                    "tab16",
+                    "tab21",
+                    "tab20",
+                    "tab19",
+                    "tab18",
+                    "tab17",
+                    "tab3"
                 ]
             },
             "name": "pane0",
             "nodes": [
                 {
                     "type": "tab",
-                    "name": "tab3",
-                    "path": "/src/main/java/socs/network/node/Router.java",
+                    "name": "tab16",
+                    "path": "/router1.txt",
                     "className": [
-                        "tab3",
-                        "changed",
-                        "conflict",
+                        "tab16",
                         "focus"
                     ],
                     "document": {
-                        "changed": true,
+                        "changed": false,
                         "meta": {
-                            "timestamp": 1446589322329
+                            "timestamp": 1446679110258
                         },
                         "filter": true,
-                        "title": "Router.java",
-                        "tooltip": "/src/main/java/socs/network/node/Router.java",
+                        "title": "router1.txt",
+                        "tooltip": "/router1.txt",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -192,19 +199,19 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab0",
-                    "path": "/src/main/java/socs/network/Main.java",
+                    "name": "tab17",
+                    "path": "/router2.txt",
                     "className": [
-                        "tab0"
+                        "tab17"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446587166862
+                            "timestamp": 1446679146351
                         },
                         "filter": true,
-                        "title": "Main.java",
-                        "tooltip": "/src/main/java/socs/network/Main.java",
+                        "title": "router2.txt",
+                        "tooltip": "/router2.txt",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -212,19 +219,19 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab1",
-                    "path": "/conf/router1.conf",
+                    "name": "tab18",
+                    "path": "/router3.txt",
                     "className": [
-                        "tab1"
+                        "tab18"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446149924979
+                            "timestamp": 1446679153844
                         },
                         "filter": true,
-                        "title": "router1.conf",
-                        "tooltip": "/conf/router1.conf",
+                        "title": "router3.txt",
+                        "tooltip": "/router3.txt",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -232,19 +239,19 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab2",
-                    "path": "/test_intput.txt",
+                    "name": "tab19",
+                    "path": "/router4.txt",
                     "className": [
-                        "tab2"
+                        "tab19"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446589261209
+                            "timestamp": 1446679157967
                         },
                         "filter": true,
-                        "title": "test_intput.txt",
-                        "tooltip": "/test_intput.txt",
+                        "title": "router4.txt",
+                        "tooltip": "/router4.txt",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -252,19 +259,39 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab4",
-                    "path": "/conf/router2.conf",
+                    "name": "tab20",
+                    "path": "/router5.txt",
                     "className": [
-                        "tab4"
+                        "tab20"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446149924979
+                            "timestamp": 1446679163614
                         },
                         "filter": true,
-                        "title": "router2.conf",
-                        "tooltip": "/conf/router2.conf",
+                        "title": "router5.txt",
+                        "tooltip": "/router5.txt",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab21",
+                    "path": "/router6.txt",
+                    "className": [
+                        "tab21"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1446679168426
+                        },
+                        "filter": true,
+                        "title": "router6.txt",
+                        "tooltip": "/router6.txt",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -278,7 +305,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/conf/router2.conf"
+            "/Untitled"
         ]
     }
 }
