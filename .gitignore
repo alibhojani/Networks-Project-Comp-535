@@ -42,4 +42,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 .idea
+.c9
+*.class
+*.jar
 workspace.xml
