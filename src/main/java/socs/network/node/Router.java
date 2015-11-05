@@ -85,8 +85,24 @@ public class Router {
    * @param destinationIP the ip adderss of the destination simulated router
    */
   private void processDetect(String destinationIP) {
-        String r = lsd.getShortestPath(destinationIP);
-        if (r!= null) System.out.println(r);
+        LinkedList<String> r = lsd.getShortestPath(destinationIP);
+        String toPrint = "";
+        if (r!= null) {
+            int weight = -1;
+            for (int i =0; i < r.size(); i++){
+                if (i!=0) {
+
+                    LinkedList<LinkDescription> l = lsd._store.get(r.get(i-1)).links;
+                    for (int j = 0; j < l.size(); j++){
+                        if (l.get(j).linkID.equals(r.get(i))) weight = l.get(j).tosMetrics; break;
+                    }
+                    toPrint = toPrint + " -> (" + weight + ")";
+
+                }
+                toPrint = toPrint + r.get(i);
+            }
+        System.out.println(toPrint);
+        }
         else System.out.println ("Shortest Path Not Found");
 
   }
@@ -135,6 +151,10 @@ public class Router {
          ld2.linkID = rd.simulatedIPAddress;
          newLSA.links.add(ld);
          newLSA2.links.add(ld2);
+         if (lsd._store.containsKey(rd.simulatedIPAddress)) newLSA.lsaSeqNumber = lsd._store.get(rd.simulatedIPAddress).lsaSeqNumber + 1;
+         else newLSA.lsaSeqNumber = 0;
+         if (lsd._store.containsKey(simulatedIP)) newLSA2.lsaSeqNumber = lsd._store.get(simulatedIP).lsaSeqNumber + 1;
+         else newLSA2.lsaSeqNumber = 0;
          lsd._store.put(rd.simulatedIPAddress, newLSA);
          lsd._store.put (simulatedIP, newLSA2);
 
@@ -297,14 +317,17 @@ public class Router {
 
     private void processLSA (LSA lsa) {
 
-        if (lsa.linkStateID.equals(rd.simulatedIPAddress)) lsa.lsaSeqNumber += 1;
+       //if (lsa.linkStateID.equals(rd.simulatedIPAddress)) lsa.lsaSeqNumber += 1;
         synchronized(lsd._store) {
             if (lsd._store.get(lsa.linkStateID) == null) {
                 lsd._store.put (lsa.linkStateID, lsa); //add new
             }
+
             else {
                 if (lsd._store.get(lsa.linkStateID).lsaSeqNumber < lsa.lsaSeqNumber) {
-                    //lsd._store.remove (lsa.linkStateID);
+                    for (int i=0; i<lsd._store.get(lsa.linkStateID).links.size(); i++){
+                        if (!lsa.links.contains(lsd._store.get(lsa.linkStateID).links.get(i))) lsa.links.add(lsd._store.get(lsa.linkStateID).links.get(i));
+                    }
                     lsd._store.put (lsa.linkStateID, lsa); //update
                 }
             }
