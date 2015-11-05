@@ -85,73 +85,9 @@ public class Router {
    * @param destinationIP the ip adderss of the destination simulated router
    */
   private void processDetect(String destinationIP) {
-
-
-      ArrayList<String> q = new ArrayList<String>();
-      HashMap<String, Integer> dist = new HashMap<String, Integer>();
-      HashMap<String, String> prev = new HashMap <String, String>();
-
-        //init PROBLEM IS HERE
-      for (LSA l : lsd._store.values()) {
-          for (LinkDescription ld : lsd._store.get(l.linkStateID).links) {
-              if (!dist.containsKey(ld.linkID))dist.put(ld.linkID, Integer.MAX_VALUE);
-              if (!prev.containsKey(ld.linkID))prev.put(ld.linkID, null);
-              if (!q.contains(ld.linkID)) q.add(ld.linkID);
-              }
-          if (!q.contains(l.linkStateID)) q.add(l.linkStateID);
-      }
-
-
-      //q.add(rd.simulatedIPAddress);
-      dist.put(rd.simulatedIPAddress, 0);
-      prev.put(rd.simulatedIPAddress, null);
-      //System.out.println(dist.toString());
-
-      while (!q.isEmpty()) {
-
-          //get node u with min dist to source
-          Integer currentMin = Integer.MAX_VALUE;
-          String u = null;
-          for (int i = 0; i < q.size(); i++) {
-            if (dist.get(q.get(i)) <= currentMin) {
-                u = q.get(i);
-                currentMin = dist.get(u);
-            }
-          }
-          System.out.println (prev.toString());
-          if (u.equals(destinationIP)) {
-              //System.out.println ("SDSD");
-              String p = destinationIP;
-              LinkedList <String> toPrint = new LinkedList<String>();
-              while (!p.equals(rd.simulatedIPAddress)) { //TODO: add arrows etc
-                  toPrint.addFirst(p);
-                  p = prev.get(p);
-
-              }
-              toPrint.addFirst(p);
-
-              System.out.println (toPrint.toString());
-              break;
-              //System.out.println ("Sort of worked");
-          }
-          q.remove(u);
-
-          //unpack u, get neighbors
-          LSA uLSA = lsd._store.get(u);
-           if (uLSA != null) {
-               for (int i = 0; i < uLSA.links.size(); i++) {
-                   //System.out.println (uLSA.links.toString());
-                   int alt = dist.get(u) + uLSA.links.get(i).tosMetrics;
-                   if (alt < dist.get(uLSA.links.get(i).linkID)) {
-                       //dist.remove(uLSA.links.get(i).linkID);
-                       dist.put(uLSA.links.get(i).linkID, alt);
-                       //prev.remove(uLSA.links.get(i).linkID);
-                       prev.put(uLSA.links.get(i).linkID, u);
-                   }
-
-               }
-           }
-      }
+        String r = lsd.getShortestPath(destinationIP);
+        if (r!= null) System.out.println(r);
+        else System.out.println ("Shortest Path Not Found");
 
   }
 
@@ -392,9 +328,8 @@ public class Router {
   private void processNeighbors() {
       synchronized(lsd._store) {
         for (LSA lsa :lsd._store.values()) {
-            if (!lsa.linkStateID.equals(rd.simulatedIPAddress)) {
-                System.out.println(lsa.linkStateID + " " + lsa.lsaSeqNumber);
-            }
+            System.out.println (lsa.linkStateID);
+            System.out.println (lsa.links.toString());
         }
       }
   }
