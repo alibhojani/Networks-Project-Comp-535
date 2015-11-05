@@ -1,0 +1,9 @@
+attach 127.0.0.1 50002 192.168.2.1 1
+wait 9000
+start
+wait 20000
+detect 192.168.1.1
+detect 192.168.2.1
+detect 192.168.3.1
+detect 192.168.4.1
+detect 192.168.5.1

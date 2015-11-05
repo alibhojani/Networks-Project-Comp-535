@@ -428,6 +428,14 @@ public class Router {
         } else if (command.equals("neighbors")) {
           //output neighbors
           processNeighbors();
+        } else if (command.startsWith("wait")) {
+          String[] cmdLine = command.split(" ");
+          System.out.println("Wating for "+cmdLine[1]+"ms ...");
+          try {
+            Thread.sleep(Integer.parseInt(cmdLine[1]));
+          } catch (Exception e) {
+              
+          }
         } else {
           //invalid command
           System.out.println("Invalid command.");
