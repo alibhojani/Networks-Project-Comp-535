@@ -104,11 +104,11 @@
     },
     "panecycle": {
         "json()": [
-            "tab47"
+            "tab1"
         ]
     },
     "panels": {
-        "@active-left": "none",
+        "@active-left": "tree",
         "@width-left": 311,
         "commands.panel": {
             "@enabled": "true",
@@ -155,6 +155,7 @@
     "search-history": {
         "search": {
             "json()": [
+                "ystem.out.println (lsa.links.toString());",
                 "terminal",
                 "lsa.linkStateID",
                 "sendLSAUpdate",
@@ -164,14 +165,14 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/tests/ring3/router1.txt",
+            "focus": "/src/main/java/socs/network/node/Router.java",
             "meta": {
                 "accessList": [
+                    "tab1",
+                    "tab0",
                     "tab47",
                     "tab48",
                     "tab49",
-                    "tab0",
-                    "tab1",
                     "tab51"
                 ]
             },
@@ -182,8 +183,7 @@
                     "name": "tab47",
                     "path": "/tests/ring3/router1.txt",
                     "className": [
-                        "tab47",
-                        "focus"
+                        "tab47"
                     ],
                     "document": {
                         "changed": false,
@@ -196,7 +196,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "tab",
@@ -290,7 +290,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446745445428
+                            "timestamp": 1446759095074
                         },
                         "filter": true,
                         "title": "LinkStateDatabase.java",
@@ -305,12 +305,13 @@
                     "name": "tab1",
                     "path": "/src/main/java/socs/network/node/Router.java",
                     "className": [
-                        "tab1"
+                        "tab1",
+                        "focus"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446745822953
+                            "timestamp": 1446759095114
                         },
                         "filter": true,
                         "title": "Router.java",
@@ -318,7 +319,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 }
             ],
             "skin": "editor_tab",
