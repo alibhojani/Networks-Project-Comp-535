@@ -1,6 +1,7 @@
-attach 127.0.0.1 50002 192.168.2.1 1
 wait 4000
+detect 192.168.1.1
+attach 127.0.0.1 50002 192.168.2.1 1
 start
 wait 5000
-neighbors
 detect 192.168.1.1
+detect 192.168.2.1

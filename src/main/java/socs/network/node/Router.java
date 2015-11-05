@@ -175,7 +175,9 @@ public class Router {
         int portFound = -1;
 
         for (int i = 0; i<4; i++) {
-            if (ports[i] == null) {
+            if (ports[i] == l) {
+                break;
+            } else if (ports[i] == null) {
                 ports[i] = l;
                 portFound = i;
                 break;
@@ -249,6 +251,7 @@ public class Router {
                     helloMsg.routerID = message.routerID;
                     sendMessage(helloMsg, message.srcProcessIP, message.srcProcessPort);
                 }
+                printPorts();
                 System.out.println("set " + message.neighborID + " state to TWO_WAY;");
             }
         } else if (message.sospfType == 1) {
@@ -408,6 +411,21 @@ public class Router {
       } catch (Exception e) {
           e.printStackTrace();
       }
+  }
+  
+  public void printPorts() {
+        for (int i = 0; i<4; i++) {
+            if (ports[i] == null) continue;
+            String router1 = "null";
+            String router2 = "null";
+            if (ports[i].router1 != null) {
+                router1 = ""+ports[i].router1.processIPAddress+":"+ports[i].router1.processPortNumber;
+            }
+            if (ports[i].router2 != null) {
+                router2 = ""+ports[i].router2.processIPAddress+":"+ports[i].router2.processPortNumber;
+            }
+            System.out.println("Router 1: "+router1+" Router2: "+router2);
+        }
   }
 
 }
