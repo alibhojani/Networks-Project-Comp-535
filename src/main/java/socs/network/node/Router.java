@@ -91,33 +91,42 @@ public class Router {
       HashMap<String, Integer> dist = new HashMap<String, Integer>();
       HashMap<String, String> prev = new HashMap <String, String>();
 
-        //init
-      for (String v : lsd._store.keySet()) {
-          dist.put(v, Integer.MAX_VALUE);
-          prev.put(v, null);
-          q.add(v);
+        //init PROBLEM IS HERE
+      for (LSA l : lsd._store.values()) {
+          for (LinkDescription ld : lsd._store.get(l.linkStateID).links) {
+              if (!dist.containsKey(ld.linkID))dist.put(ld.linkID, Integer.MAX_VALUE);
+              if (!prev.containsKey(ld.linkID))prev.put(ld.linkID, null);
+              if (!q.contains(ld.linkID)) q.add(ld.linkID);
+              }
+          if (!q.contains(l.linkStateID)) q.add(l.linkStateID);
       }
 
-      dist.put(rd.simulatedIPAddress, 0);
 
+      //q.add(rd.simulatedIPAddress);
+      dist.put(rd.simulatedIPAddress, 0);
+      prev.put(rd.simulatedIPAddress, null);
+      //System.out.println(dist.toString());
 
       while (!q.isEmpty()) {
+
           //get node u with min dist to source
           Integer currentMin = Integer.MAX_VALUE;
           String u = null;
           for (int i = 0; i < q.size(); i++) {
-            if (dist.get(q.get(i)) < currentMin) {
+            if (dist.get(q.get(i)) <= currentMin) {
                 u = q.get(i);
                 currentMin = dist.get(u);
             }
           }
-
+          System.out.println (prev.toString());
           if (u.equals(destinationIP)) {
+              //System.out.println ("SDSD");
               String p = destinationIP;
               LinkedList <String> toPrint = new LinkedList<String>();
-              while (p != rd.simulatedIPAddress) { //TODO: add arrows etc
+              while (!p.equals(rd.simulatedIPAddress)) { //TODO: add arrows etc
                   toPrint.addFirst(p);
                   p = prev.get(p);
+
               }
               toPrint.addFirst(p);
 
@@ -131,7 +140,7 @@ public class Router {
           LSA uLSA = lsd._store.get(u);
            if (uLSA != null) {
                for (int i = 0; i < uLSA.links.size(); i++) {
-
+                   //System.out.println (uLSA.links.toString());
                    int alt = dist.get(u) + uLSA.links.get(i).tosMetrics;
                    if (alt < dist.get(uLSA.links.get(i).linkID)) {
                        //dist.remove(uLSA.links.get(i).linkID);
@@ -167,18 +176,31 @@ public class Router {
     int portFound = addRouterToPorts(processIP,processPort,simulatedIP);
      if (portFound!=-1) { //search the lsd's hashmap for lsa with rd2's simIP.
          LSA newLSA = new LSA();
+         LSA newLSA2 = new LSA();
          newLSA.linkStateID = rd.simulatedIPAddress;
+         newLSA2.linkStateID = simulatedIP;
          if (lsd._store.containsKey (rd.simulatedIPAddress)) {
              newLSA.lsaSeqNumber = lsd._store.get(rd.simulatedIPAddress).lsaSeqNumber +1;
              newLSA.links = (LinkedList<LinkDescription>) lsd._store.get(rd.simulatedIPAddress).links.clone();
+         }
+         if (lsd._store.containsKey (simulatedIP)) {
+             newLSA2.lsaSeqNumber = lsd._store.get(simulatedIP).lsaSeqNumber +1;
+             newLSA2.links = (LinkedList<LinkDescription>) lsd._store.get(simulatedIP).links.clone();
          }
          //create new LinkDescription:
          LinkDescription ld = new LinkDescription();
          ld.tosMetrics = weight;
          ld.portNum = portFound;
          ld.linkID = simulatedIP;
+         //temp
+         LinkDescription ld2 = new LinkDescription();
+         ld2.tosMetrics = weight;
+         ld2.portNum = -Integer.MAX_VALUE; //means that it is holding info about reverse connection
+         ld2.linkID = rd.simulatedIPAddress;
          newLSA.links.add(ld);
-         lsd._store.put (rd.simulatedIPAddress, newLSA);
+         newLSA2.links.add(ld2);
+         lsd._store.put(rd.simulatedIPAddress, newLSA);
+         lsd._store.put (simulatedIP, newLSA2);
 
      }
 
@@ -352,7 +374,6 @@ public class Router {
             }
         }
     }
-
   /**
    * attach the link to the remote router, which is identified by the given simulated ip;
    * to establish the connection via socket, you need to indentify the process IP and process Port;
@@ -372,7 +393,7 @@ public class Router {
       synchronized(lsd._store) {
         for (LSA lsa :lsd._store.values()) {
             if (!lsa.linkStateID.equals(rd.simulatedIPAddress)) {
-                System.out.println(lsa.linkStateID);
+                System.out.println(lsa.linkStateID + " " + lsa.lsaSeqNumber);
             }
         }
       }
@@ -384,7 +405,7 @@ public class Router {
   private void processQuit() {
 
   }
-  
+
   public boolean handleCommand(String command) {
       if (command.startsWith("detect ")) {
           String[] cmdLine = command.split(" ");
