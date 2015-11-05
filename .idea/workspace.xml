@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b61581d-7734-4d9d-a631-f1cd7c36f036" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/socs/network/message/LinkDescription.class" afterPath="$PROJECT_DIR$/target/classes/socs/network/message/LinkDescription.class" />
-      <change type="MODIFICATION" beforePath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\LinkStateDatabase.class" afterPath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\LinkStateDatabase.class" />
-      <change type="MODIFICATION" beforePath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\Router$2.class" afterPath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\Router$2.class" />
-      <change type="MODIFICATION" beforePath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\Router$3.class" afterPath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\Router$3.class" />
-      <change type="MODIFICATION" beforePath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\Router.class" afterPath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\Router.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java" afterPath="$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/socs/network/node/Router.java" afterPath="$PROJECT_DIR$/src/main/java/socs/network/node/Router.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="COMP535.iws" />
@@ -58,8 +51,8 @@
       <file leaf-file-name="Router.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/node/Router.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.59408605">
-              <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.78220856">
+              <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -703,7 +696,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446758876439</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary=" 11/5/2015 (2)">
+      <created>1446767160649</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1446767160650</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -724,16 +723,16 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32440946" sideWeight="0.4941435" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32440946" sideWeight="0.48828697" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32283464" sideWeight="0.511713" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3968504" sideWeight="0.5058565" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3968504" sideWeight="0.49707174" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3968504" sideWeight="0.4941435" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31496063" sideWeight="0.48828697" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14714494" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14714494" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -774,7 +773,8 @@
     <MESSAGE value="gitignore" />
     <MESSAGE value="Dijkstra's Alg fixed by adding an extra LSA to LSD on attach (backward direction) &#10;STILL GETTING SOCKET ERROR FOR 1 -&gt; 2 -&gt; 3 -&gt; 1&#10;" />
     <MESSAGE value="commit 11/5/2015&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit 11/5/2015&#10;" />
+    <MESSAGE value=" 11/5/2015 (2)" />
+    <option name="LAST_COMMIT_MESSAGE" value=" 11/5/2015 (2)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1198,8 +1198,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/node/Router.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59408605">
-          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.78220856">
+          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
