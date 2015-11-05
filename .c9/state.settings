@@ -78,14 +78,15 @@
             "@ace": 1,
             "@acestatus": 1,
             "@divider": 4,
-            "@document": 57,
+            "@document": 7,
             "@form": 4,
             "@menu": 5,
             "@menuitem": 13,
             "@pane": 2,
-            "@session": 57,
-            "@tab": 57,
-            "@undoManager": 57,
+            "@preferences": 1,
+            "@session": 7,
+            "@tab": 2,
+            "@undoManager": 7,
             "@welcome": 1
         }
     },
@@ -103,11 +104,11 @@
     },
     "panecycle": {
         "json()": [
-            "tab54"
+            "tab47"
         ]
     },
     "panels": {
-        "@active-left": "tree",
+        "@active-left": "none",
         "@width-left": 311,
         "commands.panel": {
             "@enabled": "true",
@@ -131,7 +132,7 @@
         }
     },
     "projecttree": {
-        "@scrollpos": -10,
+        "@scrollpos": -7,
         "@showfs": true,
         "expanded": {
             "json()": [
@@ -142,9 +143,7 @@
                 "/src/main/java/socs/network",
                 "/src/main/java/socs/network/util",
                 "/src/main/java/socs/network/node",
-                "/New Folder",
                 "/tests",
-                "/tests/New Folder",
                 "/tests/ring3",
                 "/src"
             ]
@@ -165,17 +164,15 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/src/main/java/socs/network/node/Router.java",
+            "focus": "/tests/ring3/router1.txt",
             "meta": {
                 "accessList": [
-                    "tab54",
-                    "tab52",
-                    "tab55",
-                    "tab49",
-                    "tab48",
                     "tab47",
-                    "tab51",
-                    "tab3"
+                    "tab48",
+                    "tab49",
+                    "tab0",
+                    "tab1",
+                    "tab51"
                 ]
             },
             "name": "pane0",
@@ -185,12 +182,13 @@
                     "name": "tab47",
                     "path": "/tests/ring3/router1.txt",
                     "className": [
-                        "tab47"
+                        "tab47",
+                        "focus"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446682241718
+                            "timestamp": 1446755148138
                         },
                         "filter": true,
                         "title": "router1.txt",
@@ -198,7 +196,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "tab",
@@ -210,7 +208,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446682360306
+                            "timestamp": 1446755161542
                         },
                         "filter": true,
                         "title": "router2.txt",
@@ -230,7 +228,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446682364782
+                            "timestamp": 1446755040473
                         },
                         "filter": true,
                         "title": "router3.txt",
@@ -248,29 +246,51 @@
                         "tab51"
                     ],
                     "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1446681858701
-                        },
                         "filter": true,
                         "title": "run_ring3.sh",
                         "tooltip": "/run_ring3.sh",
-                        "ace": {}
+                        "ace": {
+                            "folds": [],
+                            "scrolltop": 0,
+                            "scrollleft": 0,
+                            "selection": {
+                                "start": {
+                                    "row": 6,
+                                    "column": 69
+                                },
+                                "end": {
+                                    "row": 6,
+                                    "column": 69
+                                },
+                                "isBackwards": false
+                            },
+                            "options": {
+                                "guessTabSize": true,
+                                "useWrapMode": false,
+                                "wrapToView": true
+                            },
+                            "firstLineState": 0
+                        },
+                        "hash": "71c47427dc9f2c71671b79b6dbb0170a31bd0e37",
+                        "meta": {
+                            "timestamp": 1446681858532
+                        },
+                        "changed": false
                     },
                     "editorType": "ace",
                     "active": false
                 },
                 {
                     "type": "tab",
-                    "name": "tab52",
+                    "name": "tab0",
                     "path": "/src/main/java/socs/network/node/LinkStateDatabase.java",
                     "className": [
-                        "tab52"
+                        "tab0"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446149924979
+                            "timestamp": 1446745445428
                         },
                         "filter": true,
                         "title": "LinkStateDatabase.java",
@@ -282,16 +302,15 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab54",
+                    "name": "tab1",
                     "path": "/src/main/java/socs/network/node/Router.java",
                     "className": [
-                        "tab54",
-                        "focus"
+                        "tab1"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1446678689461
+                            "timestamp": 1446745822953
                         },
                         "filter": true,
                         "title": "Router.java",
@@ -299,7 +318,7 @@
                         "ace": {}
                     },
                     "editorType": "ace",
-                    "active": true
+                    "active": false
                 }
             ],
             "skin": "editor_tab",
@@ -309,7 +328,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/src/main/java/socs/network/node/LinkStateDatabase.java"
+            "/src/main/java/socs/network/node/Router.java"
         ]
     }
 }

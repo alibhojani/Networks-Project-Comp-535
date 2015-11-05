@@ -438,7 +438,7 @@ public class Router {
           }
         } else {
           //invalid command
-          System.out.println("Invalid command.");
+          System.out.println("Invalid command: "+command);
           return false;
         }
         return true;
