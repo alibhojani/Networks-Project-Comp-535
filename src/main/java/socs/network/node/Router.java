@@ -125,6 +125,9 @@ public class Router {
    * NOTE: this command should not trigger link database synchronization
    */
    private void processAttach(String processIP, int processPort, String simulatedIP, short weight) {
+       if (rd.processIPAddress.equals(processIP) && rd.processPortNumber == processPort) {
+           return; // can't connect to ourself
+       }
     int portFound = addRouterToPorts(processIP,processPort,simulatedIP);
      if (portFound!=-1) { //search the lsd's hashmap for lsa with rd2's simIP.
          LSA newLSA = new LSA();
@@ -191,7 +194,16 @@ public class Router {
         Link l = new Link(rd, rd2);
 
         int portFound = -1;
-
+        
+        if (rd.processIPAddress.equals(rd2.processIPAddress) && rd.processPortNumber == rd2.processPortNumber) {
+            return -1; // cycle
+        }
+        
+        for (int i=0; i<4; i++) {
+            if (ports[i] != null && ports[i].equals(l)) {
+                return -1;
+            }
+        }
         for (int i = 0; i<4; i++) {
             if (ports[i] == null) {
                 ports[i] = l;
@@ -236,13 +248,14 @@ public class Router {
         new Thread(new Runnable() {
             public void run() {
         if (message.sospfType == 0) {
-            System.out.println("received HELLO from "+message.neighborID+";"); //TODO: message.srcIP?
+            //System.out.println("received HELLO from "+message.neighborID+";"); //TODO: message.srcIP?
+            System.out.println(rd.simulatedIPAddress+" received HELLO from "+message.neighborID+";"); //TODO: message.srcIP?
             // HELLO message. Try setting status to TWO_WAY;
             if (!setRouterStatus(message.neighborID, RouterStatus.TWO_WAY)) {
                 // router is not in ports, INIT then :)
                 int result = addRouterToPorts(message.srcProcessIP,message.srcProcessPort, message.neighborID);
                 if (result != -1) {
-                    System.out.println("set " + message.neighborID + " state to INIT;");
+                    System.out.println(rd.simulatedIPAddress+" set " + message.neighborID + " state to INIT;");
                     // good. reply now.
                     SOSPFPacket helloMsg = new SOSPFPacket();
                     helloMsg.srcProcessIP = rd.processIPAddress;
@@ -267,7 +280,8 @@ public class Router {
                     helloMsg.routerID = message.routerID;
                     sendMessage(helloMsg, message.srcProcessIP, message.srcProcessPort);
                 }
-                System.out.println("set " + message.neighborID + " state to TWO_WAY;");
+                //printPorts();
+                System.out.println(rd.simulatedIPAddress+" set " + message.neighborID + " state to TWO_WAY;");
             }
         } else if (message.sospfType == 1) {
             for (LSA lsa: message.lsaArray) {
@@ -433,6 +447,21 @@ public class Router {
       } catch (Exception e) {
           e.printStackTrace();
       }
+  }
+  
+  public void printPorts() {
+        for (int i = 0; i<4; i++) {
+            if (ports[i] == null) continue;
+            String router1 = "null";
+            String router2 = "null";
+            if (ports[i].router1 != null) {
+                router1 = ""+ports[i].router1.processIPAddress+":"+ports[i].router1.processPortNumber;
+            }
+            if (ports[i].router2 != null) {
+                router2 = ""+ports[i].router2.processIPAddress+":"+ports[i].router2.processPortNumber;
+            }
+            System.out.println("Router 1: "+router1+" Router2: "+router2);
+        }
   }
 
 }
