@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6b61581d-7734-4d9d-a631-f1cd7c36f036" name="Default" comment="Dijkstra's Alg fixed by adding an extra LSA to LSD on attach (backward direction) &#10;STILL GETTING SOCKET ERROR FOR 1 -&gt; 2 -&gt; 3 -&gt; 1&#10;">
-      <change type="MODIFICATION" beforePath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\Router.class" afterPath="C:\Users\alibhojani\Documents\comp535projectV4\comp535Project\target\classes\socs\network\node\Router.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java" afterPath="$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/socs/network/node/Router.java" afterPath="$PROJECT_DIR$/src/main/java/socs/network/node/Router.java" />
+    <list default="true" id="6b61581d-7734-4d9d-a631-f1cd7c36f036" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="COMP535.iws" />
@@ -682,7 +679,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446703446885</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="11/5/2015 (3)">
+      <created>1446775890488</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1446775890488</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -752,7 +755,8 @@
     <MESSAGE value="detect complete, so far working on a couple of topologies. Needs further testing" />
     <MESSAGE value="gitignore" />
     <MESSAGE value="Dijkstra's Alg fixed by adding an extra LSA to LSD on attach (backward direction) &#10;STILL GETTING SOCKET ERROR FOR 1 -&gt; 2 -&gt; 3 -&gt; 1&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dijkstra's Alg fixed by adding an extra LSA to LSD on attach (backward direction) &#10;STILL GETTING SOCKET ERROR FOR 1 -&gt; 2 -&gt; 3 -&gt; 1&#10;" />
+    <MESSAGE value="11/5/2015 (3)" />
+    <option name="LAST_COMMIT_MESSAGE" value="11/5/2015 (3)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
