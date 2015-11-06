@@ -85,23 +85,10 @@ public class Router {
    * @param destinationIP the ip adderss of the destination simulated router
    */
   private void processDetect(String destinationIP) {
-        LinkedList<String> r = lsd.getShortestPath(destinationIP);
-        String toPrint = "";
-        if (r!= null) {
-            int weight = -1;
-            for (int i =0; i < r.size(); i++){
-                if (i!=0) {
-
-                    LinkedList<LinkDescription> l = lsd._store.get(r.get(i-1)).links;
-                    for (int j = 0; j < l.size(); j++){
-                        if (l.get(j).linkID.equals(r.get(i))) weight = l.get(j).tosMetrics; break;
-                    }
-                    toPrint = toPrint + " -> (" + weight + ")";
-
-                }
-                toPrint = toPrint + r.get(i);
-            }
-        System.out.println(toPrint);
+        String r = lsd.getShortestPath(destinationIP);
+//        String toPrint = "";
+          if (r!= null) {
+            System.out.println(r);
         }
         else System.out.println ("Shortest Path Not Found");
 

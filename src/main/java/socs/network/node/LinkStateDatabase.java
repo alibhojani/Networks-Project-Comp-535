@@ -23,7 +23,8 @@ public class LinkStateDatabase {
   /**
    * output the shortest path from this router to the destination with the given IP address
    */
-  LinkedList<String> getShortestPath(String destinationIP) {
+  String getShortestPath(String destinationIP) {
+
     ArrayList<String> q = new ArrayList<String>();
     HashMap<String, Integer> dist = new HashMap<String, Integer>();
     HashMap<String, String> prev = new HashMap<String, String>();
@@ -54,14 +55,13 @@ public class LinkStateDatabase {
       if (u != null) {
         if (u.equals(destinationIP)) {
           String p = destinationIP;
-          LinkedList<String> toPrint = new LinkedList<String>();
+          String toPrint = "";
             while (!p.equals(rd.simulatedIPAddress)) {
-            toPrint.addFirst(p);
+            toPrint = "-> (" + (dist.get(p) - dist.get(prev.get(p))) + ") " + p + " " + toPrint;
             p = prev.get(p);
-
           }
 
-          toPrint.addFirst(p);
+          toPrint = p + " " + toPrint;
 
           return toPrint;
 
@@ -84,7 +84,7 @@ public class LinkStateDatabase {
   private LSA initLinkStateDatabase() {
     LSA lsa = new LSA();
     lsa.linkStateID = rd.simulatedIPAddress;
-    lsa.lsaSeqNumber = 0;
+    lsa.lsaSeqNumber = Integer.MIN_VALUE;
     LinkDescription ld = new LinkDescription();
     ld.linkID = rd.simulatedIPAddress;
     ld.portNum = -1; //index in Link[] ports array
