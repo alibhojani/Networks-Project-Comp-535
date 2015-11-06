@@ -138,12 +138,12 @@ public class Router {
              newLSA.lsaSeqNumber = lsd._store.get(rd.simulatedIPAddress).lsaSeqNumber +1;
              newLSA.links = (LinkedList<LinkDescription>) lsd._store.get(rd.simulatedIPAddress).links.clone();
          }
-         else newLSA.lsaSeqNumber = 0;
+         else newLSA.lsaSeqNumber = 1;
          if (lsd._store.containsKey (simulatedIP)) {
-             newLSA2.lsaSeqNumber = lsd._store.get(simulatedIP).lsaSeqNumber +1;
+             newLSA2.lsaSeqNumber = lsd._store.get(simulatedIP).lsaSeqNumber + 1;
              newLSA2.links = (LinkedList<LinkDescription>) lsd._store.get(simulatedIP).links.clone();
          }
-         else newLSA2.lsaSeqNumber = 0;
+         else newLSA2.lsaSeqNumber = 1;
          //create new LinkDescription:
          LinkDescription ld = new LinkDescription();
          ld.tosMetrics = weight;
@@ -343,7 +343,10 @@ public class Router {
                 //System.out.println("NEW" + " " + lsa.linkStateID + " " + lsa.lsaSeqNumber);
                 //System.out.println (lsd._store.get(lsa.linkStateID) + " " +lsd._store.get(lsa.linkStateID).lsaSeqNumber);
 
-                if (lsd._store.get(lsa.linkStateID).lsaSeqNumber < lsa.lsaSeqNumber) {
+                if (lsd._store.get(lsa.linkStateID).lsaSeqNumber <= lsa.lsaSeqNumber) {
+                    for (int i = 0; i < lsd._store.get(lsa.linkStateID).links.size(); i++){
+                        if (!lsa.links.contains(lsd._store.get(lsa.linkStateID).links.get(i))) lsa.links.add (lsd._store.get(lsa.linkStateID).links.get(i));
+                    }
                     lsd._store.put (lsa.linkStateID, lsa); //update
                 }
             }

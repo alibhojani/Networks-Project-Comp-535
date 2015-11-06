@@ -84,7 +84,7 @@ public class LinkStateDatabase {
   private LSA initLinkStateDatabase() {
     LSA lsa = new LSA();
     lsa.linkStateID = rd.simulatedIPAddress;
-    lsa.lsaSeqNumber = Integer.MIN_VALUE;
+    lsa.lsaSeqNumber = 0;
     LinkDescription ld = new LinkDescription();
     ld.linkID = rd.simulatedIPAddress;
     ld.portNum = -1; //index in Link[] ports array
