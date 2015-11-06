@@ -135,10 +135,12 @@ public class Router {
              newLSA.lsaSeqNumber = lsd._store.get(rd.simulatedIPAddress).lsaSeqNumber +1;
              newLSA.links = (LinkedList<LinkDescription>) lsd._store.get(rd.simulatedIPAddress).links.clone();
          }
+         else newLSA.lsaSeqNumber = 0;
          if (lsd._store.containsKey (simulatedIP)) {
              newLSA2.lsaSeqNumber = lsd._store.get(simulatedIP).lsaSeqNumber +1;
              newLSA2.links = (LinkedList<LinkDescription>) lsd._store.get(simulatedIP).links.clone();
          }
+         else newLSA2.lsaSeqNumber = 0;
          //create new LinkDescription:
          LinkDescription ld = new LinkDescription();
          ld.tosMetrics = weight;
@@ -151,10 +153,6 @@ public class Router {
          ld2.linkID = rd.simulatedIPAddress;
          newLSA.links.add(ld);
          newLSA2.links.add(ld2);
-         if (lsd._store.containsKey(rd.simulatedIPAddress)) newLSA.lsaSeqNumber = lsd._store.get(rd.simulatedIPAddress).lsaSeqNumber + 1;
-         else newLSA.lsaSeqNumber = 0;
-         if (lsd._store.containsKey(simulatedIP)) newLSA2.lsaSeqNumber = lsd._store.get(simulatedIP).lsaSeqNumber + 1;
-         else newLSA2.lsaSeqNumber = 0;
          lsd._store.put(rd.simulatedIPAddress, newLSA);
          lsd._store.put (simulatedIP, newLSA2);
 
@@ -273,6 +271,8 @@ public class Router {
             }
         } else if (message.sospfType == 1) {
             for (LSA lsa: message.lsaArray) {
+                //System.out.println (lsa.linkStateID);
+                //System.out.println (lsa.links);
                 processLSA(lsa);
             }
             sendLSAUpdate(message.srcIP);
@@ -317,17 +317,19 @@ public class Router {
 
     private void processLSA (LSA lsa) {
 
-       //if (lsa.linkStateID.equals(rd.simulatedIPAddress)) lsa.lsaSeqNumber += 1;
         synchronized(lsd._store) {
-            if (lsd._store.get(lsa.linkStateID) == null) {
+          if (lsd._store.get(lsa.linkStateID) == null) {
+
                 lsd._store.put (lsa.linkStateID, lsa); //add new
+                //System.out.println (lsa.linkStateID);
+                //System.out.println(lsa.links);
             }
 
             else {
+                //System.out.println("NEW" + " " + lsa.linkStateID + " " + lsa.lsaSeqNumber);
+                //System.out.println (lsd._store.get(lsa.linkStateID) + " " +lsd._store.get(lsa.linkStateID).lsaSeqNumber);
+
                 if (lsd._store.get(lsa.linkStateID).lsaSeqNumber < lsa.lsaSeqNumber) {
-                    for (int i=0; i<lsd._store.get(lsa.linkStateID).links.size(); i++){
-                        if (!lsa.links.contains(lsd._store.get(lsa.linkStateID).links.get(i))) lsa.links.add(lsd._store.get(lsa.linkStateID).links.get(i));
-                    }
                     lsd._store.put (lsa.linkStateID, lsa); //update
                 }
             }
