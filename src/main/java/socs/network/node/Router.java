@@ -250,13 +250,14 @@ public class Router {
         new Thread(new Runnable() {
             public void run() {
         if (message.sospfType == 0) {
-            System.out.println("received HELLO from "+message.neighborID+";"); //TODO: message.srcIP?
+            //System.out.println("received HELLO from "+message.neighborID+";"); //TODO: message.srcIP?
+            System.out.println(rd.simulatedIPAddress+" received HELLO from "+message.neighborID+";"); //TODO: message.srcIP?
             // HELLO message. Try setting status to TWO_WAY;
             if (!setRouterStatus(message.neighborID, RouterStatus.TWO_WAY)) {
                 // router is not in ports, INIT then :)
                 int result = addRouterToPorts(message.srcProcessIP,message.srcProcessPort, message.neighborID);
                 if (result != -1) {
-                    System.out.println("set " + message.neighborID + " state to INIT;");
+                    System.out.println(rd.simulatedIPAddress+" set " + message.neighborID + " state to INIT;");
                     // good. reply now.
                     SOSPFPacket helloMsg = new SOSPFPacket();
                     helloMsg.srcProcessIP = rd.processIPAddress;
@@ -282,7 +283,7 @@ public class Router {
                     sendMessage(helloMsg, message.srcProcessIP, message.srcProcessPort);
                 }
                 //printPorts();
-                System.out.println("set " + message.neighborID + " state to TWO_WAY;");
+                System.out.println(rd.simulatedIPAddress+" set " + message.neighborID + " state to TWO_WAY;");
             }
         } else if (message.sospfType == 1) {
             for (LSA lsa: message.lsaArray) {

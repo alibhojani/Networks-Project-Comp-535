@@ -45,7 +45,7 @@ public class LinkStateDatabase {
       Integer currentMin = Integer.MAX_VALUE;
       String u = null;
       for (int i = 0; i < q.size(); i++) {
-        if (dist.get(q.get(i)) <= currentMin) {
+        if (dist.get(q.get(i)) != null && dist.get(q.get(i)) <= currentMin) {
           u = q.get(i);
           currentMin = dist.get(u);
         }
