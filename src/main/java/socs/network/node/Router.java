@@ -125,6 +125,9 @@ public class Router {
    * NOTE: this command should not trigger link database synchronization
    */
    private void processAttach(String processIP, int processPort, String simulatedIP, short weight) {
+       if (rd.processIPAddress.equals(processIP) && rd.processPortNumber == processPort) {
+           return; // can't connect to ourself
+       }
     int portFound = addRouterToPorts(processIP,processPort,simulatedIP);
      if (portFound!=-1) { //search the lsd's hashmap for lsa with rd2's simIP.
          LSA newLSA = new LSA();
@@ -193,11 +196,18 @@ public class Router {
         Link l = new Link(rd, rd2);
 
         int portFound = -1;
-
+        
+        if (rd.processIPAddress.equals(rd2.processIPAddress) && rd.processPortNumber == rd2.processPortNumber) {
+            return -1; // cycle
+        }
+        
+        for (int i=0; i<4; i++) {
+            if (ports[i] != null && ports[i].equals(l)) {
+                return -1;
+            }
+        }
         for (int i = 0; i<4; i++) {
-            if (ports[i] == l) {
-                break;
-            } else if (ports[i] == null) {
+            if (ports[i] == null) {
                 ports[i] = l;
                 portFound = i;
                 break;
@@ -271,7 +281,7 @@ public class Router {
                     helloMsg.routerID = message.routerID;
                     sendMessage(helloMsg, message.srcProcessIP, message.srcProcessPort);
                 }
-                printPorts();
+                //printPorts();
                 System.out.println("set " + message.neighborID + " state to TWO_WAY;");
             }
         } else if (message.sospfType == 1) {
