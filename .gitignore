@@ -47,3 +47,7 @@ Temporary Items
 *.jar
 workspace.xml
 target
+/.classpath
+/.project
+/*.class
+target/*
