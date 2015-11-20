@@ -96,13 +96,18 @@ public class LinkStateDatabase {
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    for (LSA lsa: _store.values()) {
-      sb.append(lsa.linkStateID).append("(" + lsa.lsaSeqNumber + ")").append(":\t");
-      for (LinkDescription ld : lsa.links) {
-        sb.append(ld.linkID).append(",")//.append(ld.portNum).append(","). //TODO: FIX
-                .append(ld.tosMetrics).append("\t");
-      }
-      sb.append("\n");
+//    for (LSA lsa: _store.values()) {
+//      sb.append(lsa.linkStateID).append("(" + lsa.lsaSeqNumber + ")").append(":\t");
+//      for (LinkDescription ld : lsa.links) {
+//        sb.append(ld.linkID).append(",")//.append(ld.portNum).append(","). //TODO: FIX
+//                .append(ld.tosMetrics).append("\t");
+//      }
+//      sb.append("\n");
+//    }
+    for (String lsa_key: _store.keySet()) {
+    	sb.append("------------------------------------------------------------\n"+lsa_key+":\n");
+    	sb.append(_store.get(lsa_key));
+    	sb.append("------------------------------------------------------------\n");
     }
     return sb.toString();
   }

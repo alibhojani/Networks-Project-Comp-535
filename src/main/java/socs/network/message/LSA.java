@@ -14,9 +14,9 @@ public class LSA implements Serializable {
   @Override
   public String toString() {
     StringBuffer sb = new StringBuffer();
-    sb.append(linkStateID + ":").append(lsaSeqNumber + "\n");
+    sb.append(linkStateID+"(").append(lsaSeqNumber+") -> ");
     for (LinkDescription ld : links) {
-      sb.append(ld);
+      sb.append(ld+", ");
     }
     sb.append("\n");
     return sb.toString();

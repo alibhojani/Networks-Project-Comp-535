@@ -15,11 +15,15 @@ import java.util.*;
 
 public class Router {
 	public static final int INITIAL_PORT = 50000;
+	public static final int HEARTBEAT_INT = 5000; // ms
+	public static final int HEARTBEAT_MAX = 10000; // ms
 	protected LinkStateDatabase lsd;
 	RouterDescription rd = new RouterDescription();
 	Link[] ports = new Link[4]; // links (4 links)
+	long[] portsHeartbeat = new long[4]; // last heard from router
 	ServerSocket listenSocket = null;
-
+	private boolean didRunStart = false;
+	
 	public Router(Configuration config) {
 		String ip;
 		try {
@@ -33,6 +37,7 @@ public class Router {
 		rd.processPortNumber = assignPort();
 		System.out.println(ip + ' ' + rd.processPortNumber);
 		lsd = new LinkStateDatabase(rd);
+		heartbeat();
 		new Thread(new Runnable() {
 			public void run() {
 				Socket clientSocket = null;
@@ -74,6 +79,49 @@ public class Router {
 		}
 		return port;
 	}
+	
+	private void heartbeat() {
+		synchronized(ports) {
+			for (short i=0; i<ports.length; i++) {
+				if (ports[i] != null && (System.currentTimeMillis()-portsHeartbeat[i])>HEARTBEAT_MAX) {
+					handleDisconnect(i);
+				}
+			}
+		}
+		sendHeartbeat();
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				heartbeat();
+			}
+		}, HEARTBEAT_INT);
+	}
+	
+	private void sendHeartbeat() {
+		synchronized(ports) {
+			for (short i=0; i<ports.length; i++) {
+				if (ports[i] != null) {
+					Link link = ports[i];
+					// send "heartbeat" message
+					String remoteIP = link.router2.processIPAddress;
+					int remotePort = link.router2.processPortNumber;
+					SOSPFPacket heartbeatMsg = new SOSPFPacket();
+					heartbeatMsg.srcProcessIP = link.router1.processIPAddress;
+					heartbeatMsg.srcProcessPort = link.router1.processPortNumber;
+					heartbeatMsg.srcIP = link.router1.simulatedIPAddress;
+					heartbeatMsg.dstIP = link.router2.simulatedIPAddress;
+					heartbeatMsg.sospfType = 3;
+					heartbeatMsg.neighborID = link.router1.simulatedIPAddress;
+					heartbeatMsg.routerID = link.router1.simulatedIPAddress;
+					sendMessage(heartbeatMsg, remoteIP, remotePort);
+				}
+			}
+		}
+	}
+	
+	private void handleReceivedHeartbeat(short portNumber) {
+		portsHeartbeat[portNumber] = System.currentTimeMillis();
+	}
 
 	/**
 	 * output the shortest path to the given destination ip
@@ -101,7 +149,22 @@ public class Router {
 	 *            the port number which the link attaches at
 	 */
 	private void processDisconnect(short portNumber) {
-
+		if (portNumber >= 0 && portNumber < ports.length && ports[portNumber] !=null) {
+			Link link = handleDisconnect(portNumber);
+			
+			// send "disconnect" message
+			String remoteIP = link.router2.processIPAddress;
+			int remotePort = link.router2.processPortNumber;
+			SOSPFPacket disconnectMsg = new SOSPFPacket();
+			disconnectMsg.srcProcessIP = link.router1.processIPAddress;
+			disconnectMsg.srcProcessPort = link.router1.processPortNumber;
+			disconnectMsg.srcIP = link.router1.simulatedIPAddress;
+			disconnectMsg.dstIP = link.router2.simulatedIPAddress;
+			disconnectMsg.sospfType = 2;
+			disconnectMsg.neighborID = link.router1.simulatedIPAddress;
+			disconnectMsg.routerID = link.router1.simulatedIPAddress;
+			sendMessage(disconnectMsg, remoteIP, remotePort);
+		}
 	}
 
 	/**
@@ -123,6 +186,7 @@ public class Router {
 			LSA newLSA2 = new LSA();
 			newLSA.linkStateID = rd.simulatedIPAddress;
 			newLSA2.linkStateID = simulatedIP;
+			synchronized (lsd._store) {
 			if (lsd._store.containsKey(rd.simulatedIPAddress)) {
 				newLSA.lsaSeqNumber = lsd._store.get(rd.simulatedIPAddress).lsaSeqNumber + 1;
 				newLSA.links = (LinkedList<LinkDescription>) lsd._store.get(rd.simulatedIPAddress).links.clone();
@@ -148,6 +212,7 @@ public class Router {
 			newLSA2.links.add(ld2);
 			lsd._store.put(rd.simulatedIPAddress, newLSA);
 			lsd._store.put(simulatedIP, newLSA2);
+			}
 
 		}
 
@@ -157,22 +222,25 @@ public class Router {
 	 * broadcast Hello to neighbors
 	 */
 	private void processStart() {
-		for (Link l : ports) {
-			if (l == null)
-				continue;
-			String remoteIP = l.router2.processIPAddress;
-			int remotePort = l.router2.processPortNumber;
-			SOSPFPacket helloMsg = new SOSPFPacket();
-			helloMsg.srcProcessIP = l.router1.processIPAddress;
-			helloMsg.srcProcessPort = l.router1.processPortNumber;
-			helloMsg.srcIP = l.router1.simulatedIPAddress;
-			helloMsg.dstIP = l.router2.simulatedIPAddress;
-			helloMsg.sospfType = 0;
-			helloMsg.neighborID = l.router1.simulatedIPAddress;
-			helloMsg.routerID = l.router1.simulatedIPAddress;
-			sendMessage(helloMsg, remoteIP, remotePort);
+		if (!didRunStart) {
+			didRunStart = true;
+			for (Link l : ports) {
+				if (l == null)
+					continue;
+				String remoteIP = l.router2.processIPAddress;
+				int remotePort = l.router2.processPortNumber;
+				SOSPFPacket helloMsg = new SOSPFPacket();
+				helloMsg.srcProcessIP = l.router1.processIPAddress;
+				helloMsg.srcProcessPort = l.router1.processPortNumber;
+				helloMsg.srcIP = l.router1.simulatedIPAddress;
+				helloMsg.dstIP = l.router2.simulatedIPAddress;
+				helloMsg.sospfType = 0;
+				helloMsg.neighborID = l.router1.simulatedIPAddress;
+				helloMsg.routerID = l.router1.simulatedIPAddress;
+				sendMessage(helloMsg, remoteIP, remotePort);
+			}
+			sendLSAUpdate(null);
 		}
-		sendLSAUpdate(null);
 	}
 
 	private int addRouterToPorts(String processIP, int processPort, String simulatedIP) {
@@ -189,17 +257,20 @@ public class Router {
 		if (rd.processIPAddress.equals(rd2.processIPAddress) && rd.processPortNumber == rd2.processPortNumber) {
 			return -1; // cycle
 		}
-
-		for (int i = 0; i < 4; i++) {
-			if (ports[i] != null && ports[i].equals(l)) {
-				return -1;
+			
+		synchronized(ports) {
+			for (int i = 0; i < 4; i++) {
+				if (ports[i] != null && ports[i].equals(l)) {
+					return -1; // router already in array
+				}
 			}
-		}
-		for (int i = 0; i < 4; i++) {
-			if (ports[i] == null) {
-				ports[i] = l;
-				portFound = i;
-				break;
+			for (int i = 0; i < 4; i++) {
+				if (ports[i] == null) {
+					ports[i] = l;
+					portsHeartbeat[i] = System.currentTimeMillis();
+					portFound = i;
+					break;
+				}
 			}
 		}
 
@@ -229,8 +300,17 @@ public class Router {
 					oos.close();
 					connection.close();
 				} catch (IOException e) {
-					e.printStackTrace();
-					System.out.println("Failed to connect to " + remoteIP + ":" + remotePort);
+					//e.printStackTrace();
+					//System.out.println("Failed to connect to " + remoteIP + ":" + remotePort);
+					synchronized(ports) {
+						for (short portNumber=0; portNumber<ports.length;portNumber++) {
+							Link l = ports[portNumber];
+							if (l != null && l.router2.simulatedIPAddress.equals(((SOSPFPacket)message).dstIP)) {
+								handleDisconnect(portNumber);
+								break;
+							}
+						}
+					}
 				}
 			}
 		}).start();
@@ -261,6 +341,9 @@ public class Router {
 							helloMsg.neighborID = rd.simulatedIPAddress;
 							helloMsg.routerID = message.routerID;
 							sendMessage(helloMsg, message.srcProcessIP, message.srcProcessPort);
+						} else {
+							// no ports left
+							// TODO: do something
 						}
 					} else {
 						if (message.routerID.equals(rd.simulatedIPAddress)) {
@@ -279,12 +362,35 @@ public class Router {
 						System.out.println(rd.simulatedIPAddress + " set " + message.neighborID + " state to TWO_WAY;");
 					}
 				} else if (message.sospfType == 1) {
+					// LSAUpdate
 					for (LSA lsa : message.lsaArray) {
 						// System.out.println (lsa.linkStateID);
 						// System.out.println (lsa.links);
 						processLSA(lsa);
 					}
 					sendLSAUpdate(message.srcIP);
+				} else if (message.sospfType == 2) {
+					// disconnect
+					synchronized(ports) {
+						for (short portNumber=0; portNumber<ports.length;portNumber++) {
+							Link l = ports[portNumber];
+							if (l != null && l.router2.simulatedIPAddress.equals(message.srcIP)) {
+								handleDisconnect(portNumber);
+								break;
+							}
+						}
+					}
+				} else if (message.sospfType == 3) {
+					// heartbeat
+					synchronized(ports) {
+						for (short portNumber=0; portNumber<ports.length;portNumber++) {
+							Link l = ports[portNumber];
+							if (l != null && l.router2.simulatedIPAddress.equals(message.srcIP)) {
+								handleReceivedHeartbeat(portNumber);
+								break;
+							}
+						}
+					}
 				}
 			}
 		}).start();
@@ -362,12 +468,26 @@ public class Router {
 	 * This command does trigger the link database synchronization
 	 */
 	private void processConnect(String processIP, int processPort, String simulatedIP, short weight) {
-		if (rd.processIPAddress.equals(processIP) && rd.processPortNumber == processPort) {
+		if (!didRunStart || (rd.processIPAddress.equals(processIP) && rd.processPortNumber == processPort)) {
 			return; // can't connect to ourself
 		}
 		int portFound = addRouterToPorts(processIP, processPort, simulatedIP);
 		if (portFound != -1) { // search the lsd's hashmap for lsa with rd2's
 								// simIP.
+			synchronized (lsd._store) {
+			Link l = ports[portFound];
+			String remoteIP = l.router2.processIPAddress;
+			int remotePort = l.router2.processPortNumber;
+			SOSPFPacket helloMsg = new SOSPFPacket();
+			helloMsg.srcProcessIP = l.router1.processIPAddress;
+			helloMsg.srcProcessPort = l.router1.processPortNumber;
+			helloMsg.srcIP = l.router1.simulatedIPAddress;
+			helloMsg.dstIP = l.router2.simulatedIPAddress;
+			helloMsg.sospfType = 0;
+			helloMsg.neighborID = l.router1.simulatedIPAddress;
+			helloMsg.routerID = l.router1.simulatedIPAddress;
+			sendMessage(helloMsg, remoteIP, remotePort);
+			
 			LSA newLSA = new LSA();
 			LSA newLSA2 = new LSA();
 			newLSA.linkStateID = rd.simulatedIPAddress;
@@ -397,23 +517,10 @@ public class Router {
 			newLSA2.links.add(ld2);
 			lsd._store.put(rd.simulatedIPAddress, newLSA);
 			lsd._store.put(simulatedIP, newLSA2);
+			
+			sendLSAUpdate(null);
+			}
 		}
-		for (Link l : ports) {
-			if (l == null)
-				continue;
-			String remoteIP = l.router2.processIPAddress;
-			int remotePort = l.router2.processPortNumber;
-			SOSPFPacket helloMsg = new SOSPFPacket();
-			helloMsg.srcProcessIP = l.router1.processIPAddress;
-			helloMsg.srcProcessPort = l.router1.processPortNumber;
-			helloMsg.srcIP = l.router1.simulatedIPAddress;
-			helloMsg.dstIP = l.router2.simulatedIPAddress;
-			helloMsg.sospfType = 0;
-			helloMsg.neighborID = l.router1.simulatedIPAddress;
-			helloMsg.routerID = l.router1.simulatedIPAddress;
-			sendMessage(helloMsg, remoteIP, remotePort);
-		}
-		sendLSAUpdate(null);
 	}
 
 	/**
@@ -433,7 +540,29 @@ public class Router {
 	 * disconnect with all neighbors and quit the program
 	 */
 	private void processQuit() {
-
+		System.exit(0);
+	}
+	
+	private Link handleDisconnect(short portNumber) {
+		System.out.println("LSDStore before disconnect: \n"+lsd);
+		Link link = ports[portNumber];
+		// remove link from port
+		ports[portNumber] = null;
+		// remove router's LSAs
+		synchronized (lsd._store) {
+			lsd._store.remove(link.router2.simulatedIPAddress);
+			LSA l = lsd._store.get(rd.simulatedIPAddress);
+			for (LinkDescription ld : l.links) {
+				if (ld.linkID.equals(link.router2.simulatedIPAddress)) {
+					l.links.remove(ld);
+					break;
+				}
+			}
+			// send LSAUpdate
+			sendLSAUpdate(null);
+		}
+		System.out.println("LSDStore after disconnect: \n"+lsd);
+		return link;
 	}
 
 	public boolean handleCommand(String command) {
