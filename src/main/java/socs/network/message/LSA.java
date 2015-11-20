@@ -21,4 +21,12 @@ public class LSA implements Serializable {
     sb.append("\n");
     return sb.toString();
   }
+
+  public boolean findLinkInLSA (LinkDescription ld) {
+
+    for (int i = 0; i < this.links.size(); i++) {
+      if (this.links.get(i).linkID.equals(ld.linkID)) return true;
+    }
+    return false;
+  }
 }

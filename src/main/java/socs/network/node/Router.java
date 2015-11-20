@@ -432,28 +432,22 @@ public class Router {
 
 	}
 
-	private void processLSA(LSA lsa) {
+	private void processLSA (LSA lsa) {
 
-		synchronized (lsd._store) {
+		synchronized(lsd._store) {
 			if (lsd._store.get(lsa.linkStateID) == null) {
-
-				lsd._store.put(lsa.linkStateID, lsa); // add new
-				// System.out.println (lsa.linkStateID);
-				// System.out.println(lsa.links);
+				lsd._store.put (lsa.linkStateID, lsa); //add new
 			}
 
 			else {
-				// System.out.println("NEW" + " " + lsa.linkStateID + " " +
-				// lsa.lsaSeqNumber);
-				// System.out.println (lsd._store.get(lsa.linkStateID) + " "
-				// +lsd._store.get(lsa.linkStateID).lsaSeqNumber);
-
 				if (lsd._store.get(lsa.linkStateID).lsaSeqNumber <= lsa.lsaSeqNumber) {
-					for (int i = 0; i < lsd._store.get(lsa.linkStateID).links.size(); i++) {
-						if (!lsa.links.contains(lsd._store.get(lsa.linkStateID).links.get(i)))
-							lsa.links.add(lsd._store.get(lsa.linkStateID).links.get(i));
+					for (int i = 0; i < lsd._store.get(lsa.linkStateID).links.size(); i++){
+						if (!lsa.findLinkInLSA(lsd._store.get(lsa.linkStateID).links.get(i))) {
+							//System.out.println ("RAN");
+							lsa.links.add (lsd._store.get(lsa.linkStateID).links.get(i));
+						}
 					}
-					lsd._store.put(lsa.linkStateID, lsa); // update
+					lsd._store.put (lsa.linkStateID, lsa); //update
 				}
 			}
 		}
@@ -527,11 +521,10 @@ public class Router {
 	 * output the neighbors of the routers
 	 */
 	private void processNeighbors() {
-		synchronized (lsd._store) {
-			for (LSA lsa : lsd._store.values()) {
-				if (!lsa.linkStateID.equals(rd.simulatedIPAddress)) {
-					System.out.println(lsa.linkStateID + " " + lsa.lsaSeqNumber);
-				}
+		synchronized(lsd._store) {
+			for (LSA lsa :lsd._store.values()) {
+				System.out.println (lsa.linkStateID + ", " + lsa.lsaSeqNumber);
+				System.out.println (lsa.links.toString());
 			}
 		}
 	}
