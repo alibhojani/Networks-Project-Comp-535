@@ -547,7 +547,7 @@ public class Router {
 	}
 
 	private Link handleDisconnect(short portNumber) {
-		System.out.println("LSDStore before disconnect: \n" + lsd);
+		//System.out.println("LSDStore before disconnect: \n" + lsd);
 		Link link = ports[portNumber];
 		// remove link from port
 		ports[portNumber] = null;
@@ -566,7 +566,7 @@ public class Router {
 			// send LSAUpdate
 			sendLSAUpdate(null);
 		}
-		System.out.println("LSDStore after disconnect: \n" + lsd);
+		//System.out.println("LSDStore after disconnect: \n" + lsd);
 		return link;
 	}
 
