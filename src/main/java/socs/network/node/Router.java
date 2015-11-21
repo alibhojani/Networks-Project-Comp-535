@@ -183,35 +183,35 @@ public class Router {
 		if (portFound != -1) { // search the lsd's hashmap for lsa with rd2's
 								// simIP.
 			LSA newLSA = new LSA();
-			LSA newLSA2 = new LSA();
+			//LSA newLSA2 = new LSA();
 			newLSA.linkStateID = rd.simulatedIPAddress;
-			newLSA2.linkStateID = simulatedIP;
+			//newLSA2.linkStateID = simulatedIP;
 			synchronized (lsd._store) {
 			if (lsd._store.containsKey(rd.simulatedIPAddress)) {
 				newLSA.lsaSeqNumber = lsd._store.get(rd.simulatedIPAddress).lsaSeqNumber + 1;
 				newLSA.links = (LinkedList<LinkDescription>) lsd._store.get(rd.simulatedIPAddress).links.clone();
 			} else
 				newLSA.lsaSeqNumber = 1;
-			if (lsd._store.containsKey(simulatedIP)) {
-				newLSA2.lsaSeqNumber = lsd._store.get(simulatedIP).lsaSeqNumber + 1;
-				newLSA2.links = (LinkedList<LinkDescription>) lsd._store.get(simulatedIP).links.clone();
-			} else
-				newLSA2.lsaSeqNumber = 1;
+//			if (lsd._store.containsKey(simulatedIP)) {
+//				newLSA2.lsaSeqNumber = lsd._store.get(simulatedIP).lsaSeqNumber + 1;
+//				newLSA2.links = (LinkedList<LinkDescription>) lsd._store.get(simulatedIP).links.clone();
+//			} else
+//				newLSA2.lsaSeqNumber = 1;
 			// create new LinkDescription:
 			LinkDescription ld = new LinkDescription();
 			ld.tosMetrics = weight;
 			ld.portNum = portFound;
 			ld.linkID = simulatedIP;
 			// temp
-			LinkDescription ld2 = new LinkDescription();
-			ld2.tosMetrics = weight;
-			ld2.portNum = -Integer.MAX_VALUE; // means that it is holding info
-												// about reverse connection
-			ld2.linkID = rd.simulatedIPAddress;
+//			LinkDescription ld2 = new LinkDescription();
+//			ld2.tosMetrics = weight;
+//			ld2.portNum = -Integer.MAX_VALUE; // means that it is holding info
+//												// about reverse connection
+//			ld2.linkID = rd.simulatedIPAddress;
 			newLSA.links.add(ld);
-			newLSA2.links.add(ld2);
+			//newLSA2.links.add(ld2);
 			lsd._store.put(rd.simulatedIPAddress, newLSA);
-			lsd._store.put(simulatedIP, newLSA2);
+			//lsd._store.put(simulatedIP, newLSA2);
 			}
 
 		}
@@ -230,6 +230,12 @@ public class Router {
 				String remoteIP = l.router2.processIPAddress;
 				int remotePort = l.router2.processPortNumber;
 				SOSPFPacket helloMsg = new SOSPFPacket();
+				for (LinkDescription ld : lsd._store.get(rd.simulatedIPAddress).links) {
+					if (ld.linkID.equals(l.router2.simulatedIPAddress)) {
+						helloMsg.weight = ld.tosMetrics;
+						break;
+					}
+				}
 				helloMsg.srcProcessIP = l.router1.processIPAddress;
 				helloMsg.srcProcessPort = l.router1.processPortNumber;
 				helloMsg.srcIP = l.router1.simulatedIPAddress;
@@ -323,14 +329,22 @@ public class Router {
 					// System.out.println("received HELLO from
 					// "+message.neighborID+";"); //TODO: message.srcIP?
 					System.out.println(rd.simulatedIPAddress + " received HELLO from " + message.neighborID + ";"); // TODO:
-																													// message.srcIP?
+
 					// HELLO message. Try setting status to TWO_WAY;
 					if (!setRouterStatus(message.neighborID, RouterStatus.TWO_WAY)) {
 						// router is not in ports, INIT then :)
 						int result = addRouterToPorts(message.srcProcessIP, message.srcProcessPort, message.neighborID);
 						if (result != -1) {
-							System.out
-									.println(rd.simulatedIPAddress + " set " + message.neighborID + " state to INIT;");
+							System.out.println(rd.simulatedIPAddress + " set " + message.neighborID + " state to INIT;");
+							LSA newLSA2 = lsd._store.get(rd.simulatedIPAddress);
+							newLSA2.lsaSeqNumber+= 1;
+							LinkDescription ld2 = new LinkDescription();
+							ld2.tosMetrics = message.weight ;
+							ld2.portNum = result; // means that it is holding info
+							// about reverse connection
+							ld2.linkID = message.srcIP;
+							newLSA2.links.add(ld2);
+							//lsd._store.put(newLSA2);
 							// good. reply now.
 							SOSPFPacket helloMsg = new SOSPFPacket();
 							helloMsg.srcProcessIP = rd.processIPAddress;
@@ -360,6 +374,7 @@ public class Router {
 						}
 						// printPorts();
 						System.out.println(rd.simulatedIPAddress + " set " + message.neighborID + " state to TWO_WAY;");
+						sendLSAUpdate(null);
 					}
 				} else if (message.sospfType == 1) {
 					// LSAUpdate
@@ -437,17 +452,19 @@ public class Router {
 		synchronized(lsd._store) {
 			if (lsd._store.get(lsa.linkStateID) == null) {
 				lsd._store.put (lsa.linkStateID, lsa); //add new
+				//sendLSAUpdate(null);
 			}
 
 			else {
-				if (lsd._store.get(lsa.linkStateID).lsaSeqNumber <= lsa.lsaSeqNumber) {
-					for (int i = 0; i < lsd._store.get(lsa.linkStateID).links.size(); i++){
-						if (!lsa.findLinkInLSA(lsd._store.get(lsa.linkStateID).links.get(i))) {
-							//System.out.println ("RAN");
-							lsa.links.add (lsd._store.get(lsa.linkStateID).links.get(i));
-						}
-					}
-					lsd._store.put (lsa.linkStateID, lsa); //update
+				if (lsd._store.get(lsa.linkStateID).lsaSeqNumber < lsa.lsaSeqNumber) {
+//					for (int i = 0; i < lsd._store.get(lsa.linkStateID).links.size(); i++){
+//						if (!lsa.findLinkInLSA(lsd._store.get(lsa.linkStateID).links.get(i))) {
+//							//System.out.println ("RAN");
+//							lsa.links.add (lsd._store.get(lsa.linkStateID).links.get(i));
+//						}
+//					}
+					lsd._store.put(lsa.linkStateID, lsa); //update
+
 				}
 			}
 		}

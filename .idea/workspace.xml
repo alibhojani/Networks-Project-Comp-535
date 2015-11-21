@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b61581d-7734-4d9d-a631-f1cd7c36f036" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/socs/network/message/LinkDescription.class" afterPath="$PROJECT_DIR$/target/classes/socs/network/message/LinkDescription.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/socs/network/node/LinkStateDatabase.class" afterPath="$PROJECT_DIR$/target/classes/socs/network/node/LinkStateDatabase.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/socs/network/node/Router$2.class" afterPath="$PROJECT_DIR$/target/classes/socs/network/node/Router$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/socs/network/node/Router$3.class" afterPath="$PROJECT_DIR$/target/classes/socs/network/node/Router$3.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/socs/network/node/Router.class" afterPath="$PROJECT_DIR$/target/classes/socs/network/node/Router.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/socs/network/message/LSA.java" afterPath="$PROJECT_DIR$/src/main/java/socs/network/message/LSA.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/socs/network/message/LinkDescription.java" afterPath="$PROJECT_DIR$/src/main/java/socs/network/message/LinkDescription.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java" afterPath="$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/socs/network/node/Router.java" afterPath="$PROJECT_DIR$/src/main/java/socs/network/node/Router.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/socs/network/message/SOSPFPacket.java" afterPath="$PROJECT_DIR$/src/main/java/socs/network/message/SOSPFPacket.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="COMP535.iws" />
@@ -54,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Router.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Router.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/node/Router.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.69414896">
-              <caret line="464" column="60" selection-start-line="464" selection-start-column="60" selection-end-line="464" selection-end-column="60" />
+            <state vertical-scroll-proportion="-4.891892">
+              <caret line="376" column="44" selection-start-line="376" selection-start-column="44" selection-end-line="376" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1351#2082#0" expanded="true" />
@@ -67,13 +63,33 @@
                 <element signature="e#2654#2655#0" expanded="true" />
                 <element signature="e#3561#3562#0" expanded="true" />
                 <element signature="e#3623#3624#0" expanded="true" />
-                <element signature="e#9226#9950#0" expanded="true" />
-                <element signature="e#9949#9950#0" expanded="true" />
-                <element signature="e#10044#13007#0" expanded="true" />
-                <element signature="e#13006#13007#0" expanded="true" />
-                <element signature="e#17731#17732#0" expanded="true" />
-                <element signature="e#17752#17753#0" expanded="true" />
+                <element signature="e#9455#10179#0" expanded="true" />
+                <element signature="e#10178#10179#0" expanded="true" />
+                <element signature="e#10273#13590#0" expanded="true" />
+                <element signature="e#13589#13590#0" expanded="true" />
+                <element signature="e#18352#18353#0" expanded="true" />
+                <element signature="e#18373#18374#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SOSPFPacket.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/message/SOSPFPacket.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.037037">
+              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LinkStateDatabase.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.22222222">
+              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -81,18 +97,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LinkStateDatabase.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="11" selection-start-line="84" selection-start-column="11" selection-end-line="84" selection-end-column="11" />
+            <state vertical-scroll-proportion="-10.222222">
+              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -101,7 +107,7 @@
       <file leaf-file-name="LSA.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/message/LSA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.740741">
+            <state vertical-scroll-proportion="-16.333334">
               <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
               <folding>
                 <element signature="e#318#335#0" expanded="true" />
@@ -149,7 +155,6 @@
         <option value="$PROJECT_DIR$/src/main/java/socs/network/node/Link.java" />
         <option value="$PROJECT_DIR$/src/main/java/socs/network/util/Configuration.java" />
         <option value="$PROJECT_DIR$/src/main/java/socs/network/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/socs/network/message/SOSPFPacket.java" />
         <option value="$PROJECT_DIR$/src/main/java/socs/network/node/RouterDescription.java" />
         <option value="$PROJECT_DIR$/conf/router2.conf" />
         <option value="$PROJECT_DIR$/test_intput.txt" />
@@ -159,6 +164,7 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/java/socs/network/message/LSA.java" />
         <option value="$PROJECT_DIR$/src/main/java/socs/network/message/LinkDescription.java" />
+        <option value="$PROJECT_DIR$/src/main/java/socs/network/message/SOSPFPacket.java" />
         <option value="$PROJECT_DIR$/src/main/java/socs/network/node/Router.java" />
         <option value="$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java" />
       </list>
@@ -283,6 +289,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="node" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="comp535Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="comp535Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="network" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="message" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -690,7 +726,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446780118281</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="process LSA + seq number init changed">
+      <created>1448062746784</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1448062746784</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -711,16 +753,16 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32440946" sideWeight="0.48535872" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32440946" sideWeight="0.46486092" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31811023" sideWeight="0.52342606" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31811023" sideWeight="0.5578331" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3968504" sideWeight="0.4941435" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31811023" sideWeight="0.47657394" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31811023" sideWeight="0.44216692" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23792094" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23792094" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -763,10 +805,13 @@
     <MESSAGE value="11/5/2015 (3)" />
     <MESSAGE value="gitignore&#10;" />
     <MESSAGE value="sort of broken hack" />
-    <option name="LAST_COMMIT_MESSAGE" value="sort of broken hack" />
+    <MESSAGE value="process LSA + seq number init changed" />
+    <option name="LAST_COMMIT_MESSAGE" value="process LSA + seq number init changed" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -808,12 +853,12 @@
             <element signature="e#2654#2655#0" expanded="true" />
             <element signature="e#3561#3562#0" expanded="true" />
             <element signature="e#3623#3624#0" expanded="true" />
-            <element signature="e#9226#9950#0" expanded="true" />
-            <element signature="e#9949#9950#0" expanded="true" />
-            <element signature="e#10044#13007#0" expanded="true" />
-            <element signature="e#13006#13007#0" expanded="true" />
-            <element signature="e#17731#17732#0" expanded="true" />
-            <element signature="e#17752#17753#0" expanded="true" />
+            <element signature="e#9455#10179#0" expanded="true" />
+            <element signature="e#10178#10179#0" expanded="true" />
+            <element signature="e#10273#13590#0" expanded="true" />
+            <element signature="e#13589#13590#0" expanded="true" />
+            <element signature="e#18352#18353#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -885,12 +930,12 @@
             <element signature="e#2654#2655#0" expanded="true" />
             <element signature="e#3561#3562#0" expanded="true" />
             <element signature="e#3623#3624#0" expanded="true" />
-            <element signature="e#9226#9950#0" expanded="true" />
-            <element signature="e#9949#9950#0" expanded="true" />
-            <element signature="e#10044#13007#0" expanded="true" />
-            <element signature="e#13006#13007#0" expanded="true" />
-            <element signature="e#17731#17732#0" expanded="true" />
-            <element signature="e#17752#17753#0" expanded="true" />
+            <element signature="e#9455#10179#0" expanded="true" />
+            <element signature="e#10178#10179#0" expanded="true" />
+            <element signature="e#10273#13590#0" expanded="true" />
+            <element signature="e#13589#13590#0" expanded="true" />
+            <element signature="e#18352#18353#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -948,12 +993,12 @@
             <element signature="e#2654#2655#0" expanded="true" />
             <element signature="e#3561#3562#0" expanded="true" />
             <element signature="e#3623#3624#0" expanded="true" />
-            <element signature="e#9226#9950#0" expanded="true" />
-            <element signature="e#9949#9950#0" expanded="true" />
-            <element signature="e#10044#13007#0" expanded="true" />
-            <element signature="e#13006#13007#0" expanded="true" />
-            <element signature="e#17731#17732#0" expanded="true" />
-            <element signature="e#17752#17753#0" expanded="true" />
+            <element signature="e#9455#10179#0" expanded="true" />
+            <element signature="e#10178#10179#0" expanded="true" />
+            <element signature="e#10273#13590#0" expanded="true" />
+            <element signature="e#13589#13590#0" expanded="true" />
+            <element signature="e#18352#18353#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1011,12 +1056,12 @@
             <element signature="e#2654#2655#0" expanded="true" />
             <element signature="e#3561#3562#0" expanded="true" />
             <element signature="e#3623#3624#0" expanded="true" />
-            <element signature="e#9226#9950#0" expanded="true" />
-            <element signature="e#9949#9950#0" expanded="true" />
-            <element signature="e#10044#13007#0" expanded="true" />
-            <element signature="e#13006#13007#0" expanded="true" />
-            <element signature="e#17731#17732#0" expanded="true" />
-            <element signature="e#17752#17753#0" expanded="true" />
+            <element signature="e#9455#10179#0" expanded="true" />
+            <element signature="e#10178#10179#0" expanded="true" />
+            <element signature="e#10273#13590#0" expanded="true" />
+            <element signature="e#13589#13590#0" expanded="true" />
+            <element signature="e#18352#18353#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1074,12 +1119,12 @@
             <element signature="e#2654#2655#0" expanded="true" />
             <element signature="e#3561#3562#0" expanded="true" />
             <element signature="e#3623#3624#0" expanded="true" />
-            <element signature="e#9226#9950#0" expanded="true" />
-            <element signature="e#9949#9950#0" expanded="true" />
-            <element signature="e#10044#13007#0" expanded="true" />
-            <element signature="e#13006#13007#0" expanded="true" />
-            <element signature="e#17731#17732#0" expanded="true" />
-            <element signature="e#17752#17753#0" expanded="true" />
+            <element signature="e#9455#10179#0" expanded="true" />
+            <element signature="e#10178#10179#0" expanded="true" />
+            <element signature="e#10273#13590#0" expanded="true" />
+            <element signature="e#13589#13590#0" expanded="true" />
+            <element signature="e#18352#18353#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1124,14 +1169,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19318181">
           <caret line="7" column="27" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/message/SOSPFPacket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -1195,24 +1232,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/message/LSA.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.740741">
-          <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
-          <folding>
-            <element signature="e#318#335#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1229,18 +1248,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/message/SOSPFPacket.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="11" selection-start-line="84" selection-start-column="11" selection-end-line="84" selection-end-column="11" />
+        <state vertical-scroll-proportion="-5.037037">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/node/Router.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69414896">
-          <caret line="464" column="60" selection-start-line="464" selection-start-column="60" selection-end-line="464" selection-end-column="60" />
+        <state vertical-scroll-proportion="-4.891892">
+          <caret line="376" column="44" selection-start-line="376" selection-start-column="44" selection-end-line="376" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1351#2082#0" expanded="true" />
@@ -1249,13 +1268,39 @@
             <element signature="e#2654#2655#0" expanded="true" />
             <element signature="e#3561#3562#0" expanded="true" />
             <element signature="e#3623#3624#0" expanded="true" />
-            <element signature="e#9226#9950#0" expanded="true" />
-            <element signature="e#9949#9950#0" expanded="true" />
-            <element signature="e#10044#13007#0" expanded="true" />
-            <element signature="e#13006#13007#0" expanded="true" />
-            <element signature="e#17731#17732#0" expanded="true" />
-            <element signature="e#17752#17753#0" expanded="true" />
+            <element signature="e#9455#10179#0" expanded="true" />
+            <element signature="e#10178#10179#0" expanded="true" />
+            <element signature="e#10273#13590#0" expanded="true" />
+            <element signature="e#13589#13590#0" expanded="true" />
+            <element signature="e#18352#18353#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.222222">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/message/LSA.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.333334">
+          <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
+          <folding>
+            <element signature="e#318#335#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/socs/network/node/LinkStateDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22222222">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
