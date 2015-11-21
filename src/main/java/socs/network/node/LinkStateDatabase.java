@@ -57,7 +57,8 @@ public class LinkStateDatabase {
           String p = destinationIP;
           String toPrint = "";
             while (!p.equals(rd.simulatedIPAddress)) {
-            toPrint = "-> (" + (dist.get(p) - dist.get(prev.get(p))) + ") " + p + " " + toPrint;
+            if (dist.get(p) != null && dist.get(prev.get(p)) != null)toPrint = "-> (" + (dist.get(p) - dist.get(prev.get(p))) + ") " + p + " " + toPrint;
+            else return "Shortest Path Not Found";
             p = prev.get(p);
           }
 
