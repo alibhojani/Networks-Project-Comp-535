@@ -560,7 +560,7 @@ public class Router {
 		ports[portNumber] = null;
 		// remove router's LSAs
 		synchronized (lsd._store) {
-			lsd._store.remove(link.router2.simulatedIPAddress);
+			//lsd._store.remove(link.router2.simulatedIPAddress); - aging will do it
 			LSA l = lsd._store.get(rd.simulatedIPAddress);
 			for (LinkDescription ld : l.links) {
 				if (ld.linkID.equals(link.router2.simulatedIPAddress)) {
