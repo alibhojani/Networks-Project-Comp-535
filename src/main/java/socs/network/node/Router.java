@@ -532,9 +532,8 @@ public class Router {
 	 */
 	private void processNeighbors() {
 		synchronized (lsd._store) {
-			for (LSA lsa : lsd._store.values()) {
-				System.out.println(lsa.linkStateID + ", " + lsa.lsaSeqNumber);
-				System.out.println(lsa.links.toString());
+			for (Link l : ports) {
+				if (l!=null)System.out.println (l.router2.simulatedIPAddress);
 			}
 		}
 	}
